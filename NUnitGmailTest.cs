@@ -55,19 +55,29 @@ namespace GmailTest
         public void Test_004()
         {
             // Arrange
-            PageInbox inbox = new PageInbox();
-            inbox.Search("Седов");
+            pageInbox = new PageInbox();
+            pageInbox.Search("Седов");
+            int expected = pageInbox.ResultCount();            
 
-            int expected = inbox.ResultCount();
-
-            //bool expected = true; // проверить!!! ожидаю false
-
-            // Act
-            //bool actual = inbox.IsVissible();
+            // Act            
             int actual = 2;
 
             // Assert
             Assert.AreEqual(actual, expected);
+        }
+
+        [Test]
+        public void Test_005()
+        {
+            // Arrange            
+            int count = pageInbox.ResultCount();
+            pageInbox.WriteMessage("");
+
+            // Act            
+            int actual = 2;
+
+            // Assert
+            Assert.AreEqual(2, 2);
         }
 
     }

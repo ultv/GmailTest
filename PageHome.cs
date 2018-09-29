@@ -12,7 +12,13 @@ namespace GmailTest
 {
     public class PageHome
     {
- //       private IWebDriver browser;
+        //       private IWebDriver browser;
+
+        public PageHome(IWebDriver browser)
+        {
+            //NUnitSetupFixture.browser = browser;
+            PageFactory.InitElements(NUnitSetupFixture.browser, this);
+        }
 
         [FindsBy(How = How.ClassName, Using = "whsOnd")]
         private IWebElement LoginInput { get; set; }
@@ -20,13 +26,7 @@ namespace GmailTest
         [FindsBy(How = How.Id, Using = "headingText")]
         private IWebElement WelcomeText { get; set; }
         
-        private By ProfileText { get { return By.Id("profileIdentifier"); } }
-
-        public PageHome(IWebDriver browser)
-        {
-            NUnitSetupFixture.browser = browser;            
-            PageFactory.InitElements(browser, this);
-        }
+        private By ProfileText { get { return By.Id("profileIdentifier"); } }       
 
         public void Open(string url)
         {

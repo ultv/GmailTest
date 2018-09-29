@@ -13,6 +13,7 @@ namespace GmailTest
         public string login;
         public string pass;
         public PageHome pageHome;
+        public PageInbox pageInbox;     
         public ConfigReader conf;
 
         [OneTimeSetUp]
