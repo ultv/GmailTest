@@ -11,12 +11,11 @@ namespace GmailTest
     public class NUnitGmailTest : NUnitSetupFixture
     {
         [Test]
-        public void TestPageHome()
+        public void Test_001()
         {
             // Arrange           
             pageHome = new PageHome(browser);
-            pageHome.Open(url);
-            pageHome.EnterLogin(conf.Login);
+            pageHome.Open(url);            
             string expected = "Gmail";
 
             // Act
@@ -25,5 +24,32 @@ namespace GmailTest
             // Assert
             Assert.AreEqual(actual, expected);
         }
+
+        [Test]
+        public void Test_002()
+        {
+            // Arrange                       
+            string expected = "Вход";
+
+            // Act
+            string actual = pageHome.EnterLogin(conf.Login).Text;
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+        }
+
+        [Test]
+        public void Test_003()
+        {
+            // Arrange                       
+            string expected = "Добро пожаловать!";
+
+            // Act
+            string actual = pageHome.EnterPass(conf.Pass).Text;
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+        }
+
     }
 }

@@ -18,8 +18,7 @@ namespace GmailTest
         [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
-            conf = new ConfigReader();
-            //conf.LoadConfig("C:\\CODE\\CS\\GmailTest\\bin\\Debug\\config.json");
+            conf = new ConfigReader();            
             conf.LoadConfig(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\config.json");
             login = conf.Login;
             pass = conf.Pass;
@@ -32,7 +31,7 @@ namespace GmailTest
         [OneTimeTearDown]
         public void RunAfterAnyTests()
         {
-            browser.Quit();
+//            browser.Quit();
         }
     }
 
