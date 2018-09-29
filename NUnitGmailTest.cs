@@ -16,7 +16,7 @@ namespace GmailTest
             // Arrange           
             pageHome = new PageHome(browser);
             pageHome.Open(url);
-            pageHome.EnterLogin("12345");
+            pageHome.EnterLogin(conf.Login);
             string expected = "Gmail";
 
             // Act
