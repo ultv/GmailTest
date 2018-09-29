@@ -8,16 +8,17 @@ using OpenQA.Selenium.Support.PageObjects;
 
 namespace GmailTest
 {
-    class PageHome
+    public class PageHome
     {
         private IWebDriver browser;
 
         [FindsBy(How = How.ClassName, Using = "whsOnd")]
         private IWebElement LoginInput { get; set; }
 
-        PageHome(IWebDriver browser)
+        public PageHome(IWebDriver browser)
         {
-            this.browser = browser;
+            this.browser = browser;            
+            PageFactory.InitElements(browser, this);
         }
 
         public void Open(string url)
