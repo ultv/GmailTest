@@ -60,6 +60,7 @@
     <Compile Include="NUnitGmailTest.cs" />
     <Compile Include="NUnitSetupFixture.cs" />
     <Compile Include="PageHome.cs" />
+    <Compile Include="PageInbox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

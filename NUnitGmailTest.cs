@@ -42,10 +42,29 @@ namespace GmailTest
         public void Test_003()
         {
             // Arrange                       
-            string expected = "Добро пожаловать!";
+            string expected = "Александр Седов";
 
             // Act
             string actual = pageHome.EnterPass(conf.Pass).Text;
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+        }
+
+        [Test]
+        public void Test_004()
+        {
+            // Arrange
+            PageInbox inbox = new PageInbox();
+            inbox.Search("Седов");
+
+            int expected = inbox.ResultCount();
+
+            //bool expected = true; // проверить!!! ожидаю false
+
+            // Act
+            //bool actual = inbox.IsVissible();
+            int actual = 2;
 
             // Assert
             Assert.AreEqual(actual, expected);

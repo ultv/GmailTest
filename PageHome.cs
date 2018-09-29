@@ -12,7 +12,7 @@ namespace GmailTest
 {
     public class PageHome
     {
-        private IWebDriver browser;
+ //       private IWebDriver browser;
 
         [FindsBy(How = How.ClassName, Using = "whsOnd")]
         private IWebElement LoginInput { get; set; }
@@ -24,13 +24,13 @@ namespace GmailTest
 
         public PageHome(IWebDriver browser)
         {
-            this.browser = browser;            
+            NUnitSetupFixture.browser = browser;            
             PageFactory.InitElements(browser, this);
         }
 
         public void Open(string url)
         {
-            browser.Navigate().GoToUrl(url);
+            NUnitSetupFixture.browser.Navigate().GoToUrl(url);
         }
 
         public IWebElement EnterLogin(string login)
@@ -43,7 +43,7 @@ namespace GmailTest
 
         public IWebElement EnterPass(string pass)
         {
-            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
+            WebDriverWait ww = new WebDriverWait(NUnitSetupFixture.browser, TimeSpan.FromSeconds(15));
             IWebElement profile = ww.Until(ExpectedConditions.ElementIsVisible(ProfileText));
 
             LoginInput.SendKeys(pass + OpenQA.Selenium.Keys.Enter);            

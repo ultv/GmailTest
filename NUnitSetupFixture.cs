@@ -8,7 +8,7 @@ namespace GmailTest
     [SetUpFixture]
     public class NUnitSetupFixture
     {
-        static public IWebDriver browser;
+        static public IWebDriver browser { get; set; }
         public readonly string url = "http://gmail.com";
         public string login;
         public string pass;
