@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="ConfigReader.cs" />
     <Compile Include="NUnitGmailTest.cs" />
+    <Compile Include="NUnitGmailTest2.cs" />
     <Compile Include="NUnitSetupFixture.cs" />
     <Compile Include="PageHome.cs" />
     <Compile Include="PageInbox.cs" />
