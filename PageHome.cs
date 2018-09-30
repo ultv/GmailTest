@@ -13,9 +13,12 @@ namespace GmailTest
     public class PageHome
     {        
         public PageHome(IWebDriver browser)
-        {            
-            PageFactory.InitElements(NUnitSetupFixture.browser, this);
+        {
+            this.browser = browser;
+            PageFactory.InitElements(browser, this);
         }
+
+        private IWebDriver browser;
 
         /// <summary>
         /// Поле для ввода имени пользователя.
@@ -41,7 +44,7 @@ namespace GmailTest
         /// <param name="url">Принимает адрес сайта.</param>
         public void Open(string url)
         {
-            NUnitSetupFixture.browser.Navigate().GoToUrl(url);
+            browser.Navigate().GoToUrl(url);
         }
 
         /// <summary>
@@ -64,7 +67,7 @@ namespace GmailTest
         /// <returns>Возвращает текст приветствия.</returns>
         public IWebElement EnterPass(string pass)
         {
-            WebDriverWait ww = new WebDriverWait(NUnitSetupFixture.browser, TimeSpan.FromSeconds(15));
+            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
             IWebElement profile = ww.Until(ExpectedConditions.ElementIsVisible(ProfileText));
 
             LoginInput.SendKeys(pass);

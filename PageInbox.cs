@@ -12,10 +12,13 @@ namespace GmailTest
 {
     public class PageInbox
     {
-        public PageInbox()
+        public PageInbox(IWebDriver browser)
         {
-            PageFactory.InitElements(NUnitSetupFixture.browser, this);
+            this.browser = browser;
+            PageFactory.InitElements(browser, this);
         }
+
+        private IWebDriver browser;
 
         /// <summary>
         /// Количество найденных писем.
@@ -71,7 +74,7 @@ namespace GmailTest
         /// <param name="text">Принимает фразу для поиска.</param>
         public void Search(string text)
         {
-            WebDriverWait ww = new WebDriverWait(NUnitSetupFixture.browser, TimeSpan.FromSeconds(15));
+            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
             IWebElement input = ww.Until(ExpectedConditions.ElementIsVisible(SearchInput));
 
             input.SendKeys(text + OpenQA.Selenium.Keys.Enter);
@@ -79,7 +82,7 @@ namespace GmailTest
 
         public bool IsVissible()
         {                        
-            List<IWebElement> elements = NUnitSetupFixture.browser.FindElements(OptionsBar).ToList();            
+            List<IWebElement> elements = browser.FindElements(OptionsBar).ToList();            
 
             if (elements.Count > 0)
                 return true;
@@ -93,10 +96,10 @@ namespace GmailTest
         public int ResultCount()
         {
             ///???
-            WebDriverWait ww = new WebDriverWait(NUnitSetupFixture.browser, TimeSpan.FromSeconds(15));
+            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
             ww.Until(ExpectedConditions.InvisibilityOfElementLocated(OptionsBar));            
 
-            List<IWebElement> elements = NUnitSetupFixture.browser.FindElements(ResultSearch).ToList();
+            List<IWebElement> elements = browser.FindElements(ResultSearch).ToList();
 
             //MessageBox.Show(elements.Count.ToString());
 

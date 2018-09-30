@@ -8,16 +8,16 @@ using NUnit.Framework;
 namespace GmailTest
 {
     [TestFixture]
-    public class NUnitGmailTest : NUnitSetupFixture
+    public class NUnitGmailTest2 : NUnitSetupFixture
     {
-        private IWebDriver browser = browserChrome1;
+        private IWebDriver browser = browserChrome2;
 
         [Test]
         public void Test_001()
         {
             // Arrange           
             pageHome = new PageHome(browser);
-            pageHome.Open(url);            
+            pageHome.Open(url);
             string expected = "Gmail";
 
             // Act
