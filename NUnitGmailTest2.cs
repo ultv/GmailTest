@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace GmailTest
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Fixtures)]
     public class NUnitGmailTest2 : NUnitSetupFixture
     {
         private IWebDriver browser = browserChrome2;
