@@ -70,7 +70,9 @@ namespace GmailTest
             WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
             IWebElement profile = ww.Until(ExpectedConditions.ElementIsVisible(ProfileText));
 
+            System.Threading.Thread.Sleep(1000);
             LoginInput.SendKeys(pass);
+            System.Threading.Thread.Sleep(1000);
             LoginInput.SendKeys(OpenQA.Selenium.Keys.Enter);
 
             return WelcomeText;

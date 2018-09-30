@@ -11,7 +11,7 @@ namespace GmailTest
     [Parallelizable(ParallelScope.Fixtures)]
     public class NUnitGmailTest : NUnitSetupFixture
     {
-        private IWebDriver browser = browserChrome1;
+        private IWebDriver browser = browser1;
 
         [Test]
         public void Test_001()
