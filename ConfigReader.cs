@@ -16,7 +16,11 @@ namespace GmailTest
         public string Login { get; set; }
         [DataMember]
         public string Pass { get; set; }
-       
+
+        /// <summary>
+        /// Загружает логин и пароль из файла.
+        /// </summary>
+        /// <param name="fileName">Принимает имя файла и путь.</param>        
         public void LoadConfig(string fileName)
         {            
 
