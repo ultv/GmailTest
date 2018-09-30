@@ -67,7 +67,8 @@ namespace GmailTest
             WebDriverWait ww = new WebDriverWait(NUnitSetupFixture.browser, TimeSpan.FromSeconds(15));
             IWebElement profile = ww.Until(ExpectedConditions.ElementIsVisible(ProfileText));
 
-            LoginInput.SendKeys(pass + OpenQA.Selenium.Keys.Enter);            
+            LoginInput.SendKeys(pass);
+            LoginInput.SendKeys(OpenQA.Selenium.Keys.Enter);
 
             return WelcomeText;
         }
