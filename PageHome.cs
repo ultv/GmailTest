@@ -11,28 +11,44 @@ using OpenQA.Selenium.Support.UI;
 namespace GmailTest
 {
     public class PageHome
-    {
-        //       private IWebDriver browser;
-
+    {        
         public PageHome(IWebDriver browser)
-        {
-            //NUnitSetupFixture.browser = browser;
+        {            
             PageFactory.InitElements(NUnitSetupFixture.browser, this);
         }
 
+        /// <summary>
+        /// Поле для ввода имени пользователя.
+        /// </summary>
         [FindsBy(How = How.ClassName, Using = "whsOnd")]
         private IWebElement LoginInput { get; set; }
 
+        /// <summary>
+        /// Приветствие. Появляется после ввода имени пользователя.
+        /// </summary>
         [FindsBy(How = How.Id, Using = "headingText")]
         private IWebElement WelcomeText { get; set; }
-        
-        private By ProfileText { get { return By.Id("profileIdentifier"); } }       
 
+        /// <summary>
+        /// Индикатор профиля. Появляется после ввода имени пользователя.
+        /// </summary>
+        [FindsBy(How = How.Id, Using = "profileIdentifier")]        
+        private By ProfileText { get { return By.Id("profileIdentifier"); } }
+
+        /// <summary>
+        /// Открывает главную страницу.
+        /// </summary>
+        /// <param name="url">Принимает адрес сайта.</param>
         public void Open(string url)
         {
             NUnitSetupFixture.browser.Navigate().GoToUrl(url);
         }
 
+        /// <summary>
+        /// Вводит имя пользователя.
+        /// </summary>
+        /// <param name="login">Принимает имя пользователя.</param>
+        /// <returns>Возвращает текст приветствия.</returns>
         public IWebElement EnterLogin(string login)
         {
             LoginInput.Clear();
@@ -41,6 +57,11 @@ namespace GmailTest
             return WelcomeText;
         }
 
+        /// <summary>
+        /// Вводит пароль.
+        /// </summary>
+        /// <param name="pass">Принимает пароль.</param>
+        /// <returns>Возвращает текст приветствия.</returns>
         public IWebElement EnterPass(string pass)
         {
             WebDriverWait ww = new WebDriverWait(NUnitSetupFixture.browser, TimeSpan.FromSeconds(15));

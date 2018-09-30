@@ -57,13 +57,15 @@ namespace GmailTest
             // Arrange
             pageInbox = new PageInbox();
             pageInbox.Search("Седов");
-            int expected = pageInbox.ResultCount();            
+            //int expected = pageInbox.ResultCount();            
+            //string expected = "Результаты поиска - ulsdet@gmail.com - Gmail";
+            string expected = "Gmail";
 
             // Act            
-            int actual = 2;
+            string actual = browser.Title;
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreNotEqual(actual, expected);
         }
 
         [Test]
@@ -71,7 +73,7 @@ namespace GmailTest
         {
             // Arrange            
             int count = pageInbox.ResultCount();
-            pageInbox.WriteMessage("");
+            pageInbox.WriteMessage();
 
             // Act            
             int actual = 2;
