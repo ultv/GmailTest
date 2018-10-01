@@ -3,16 +3,23 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Support.PageObjects;
 using NUnit.Framework;
+using NUnit.Allure.Core;
+using NUnit.Allure.Attributes;
 
 
 namespace GmailTest
 {
     [TestFixture]
     [Parallelizable(ParallelScope.Fixtures)]
+    //[AllureNUnit]
+    //[AllureDisplayIgnored]
     public class NUnitGmailTest : NUnitSetupFixture
     {
         private IWebDriver browser = browser1;
 
+        //[Test(Description = "Главная страница")]
+        //[AllureTag("Regression")]
+        //[AllureOwner("Седов А")]
         [Test]
         public void Test_001()
         {
