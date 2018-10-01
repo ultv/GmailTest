@@ -1,9 +1,37 @@
 ﻿{
   "allure": {
-    "directory": "allure-results",
+    "directory": "target/allure-results",
     "links": [
-      "https://example.org/{issue}",
-      "https://example.org/{tms}"
+      "{link}",
+      "https://testrail.com/browse/{tms}",
+      "https://jira.com/browse/{issue}"
     ]
+  },
+  "specflow": {
+    "stepArguments": {
+      "convertToParameters": "true",
+      "paramNameRegex": "",
+      "paramValueRegex": ""
+    },
+    "grouping": {
+      "suites": {
+        "parentSuite": "^parentSuite:?(.+)",
+        "suite": "^suite:?(.+)",
+        "subSuite": "^subSuite:?(.+)"
+      },
+      "behaviors": {
+        "epic": "^epic:?(.+)",
+        "story": "^story:(.+)"
+      }
+    },
+    "labels": {
+      "owner": "^author:?(.+)",
+      "severity": "^(normal|blocker|critical|minor|trivial)"
+    },
+    "links": {
+      "tms": "^story:(.+)",
+      "issue": "^issue:(.+)",
+      "link": "^link:(.+)",
+    }
   }
 }
