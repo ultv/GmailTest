@@ -17,6 +17,7 @@ namespace GmailTest
 
         public string login;
         public string pass;
+        public string[] uri;
         public PageHome pageHome;
         public PageInbox pageInbox;     
         public ConfigReader conf;
@@ -28,6 +29,7 @@ namespace GmailTest
             conf.LoadConfig(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\config.json");
             login = conf.Login;
             pass = conf.Pass;
+            uri = conf.Uri;
 
             //browser = new OpenQA.Selenium.Chrome.ChromeDriver();
             //browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
@@ -35,14 +37,14 @@ namespace GmailTest
             
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.SetCapability(CapabilityType.BrowserName, "chrome");            
-            browser1 = browser1 ?? new RemoteWebDriver(new Uri("http://192.168.1.33:23808/wd/hub"), capabilities);
+            browser1 = browser1 ?? new RemoteWebDriver(new Uri(uri[0]), capabilities);
             browser1.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
 
-            //browser2 = browser2 ?? new RemoteWebDriver(new Uri("http://192.168.1.33:16602/wd/hub"), capabilities);
+            //browser2 = browser2 ?? new RemoteWebDriver(new Uri(uri[1]), capabilities);
             //browser2.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
 
             capabilities.SetCapability(CapabilityType.BrowserName, "firefox");
-            browser3 = browser3 ?? new RemoteWebDriver(new Uri("http://192.168.1.33:5556/wd/hub"), capabilities);
+            browser3 = browser3 ?? new RemoteWebDriver(new Uri(uri[2]), capabilities);
             browser3.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
         }
 
