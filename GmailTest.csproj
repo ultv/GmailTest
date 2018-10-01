@@ -73,9 +73,6 @@
   <ItemGroup>
     <Compile Include="AllureSampleTest.cs" />
     <Compile Include="ConfigReader.cs" />
-    <Compile Include="NUnitGmailTest.cs" />
-    <Compile Include="NUnitGmailTest2.cs" />
-    <Compile Include="NUnitSetupFixture.cs" />
     <Compile Include="PageHome.cs" />
     <Compile Include="PageInbox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
