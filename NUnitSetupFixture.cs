@@ -7,7 +7,7 @@ using OpenQA.Selenium.Remote;
 
 namespace GmailTest
 {
-  //  [SetUpFixture]
+    [SetUpFixture]
     public class NUnitSetupFixture
     {
         static public IWebDriver browser1;
@@ -22,7 +22,7 @@ namespace GmailTest
         public PageInbox pageInbox;     
         public ConfigReader conf;
 
-   //     [OneTimeSetUp]
+        [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
             conf = new ConfigReader();            
@@ -48,7 +48,7 @@ namespace GmailTest
             browser3.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
         }
 
-   //     [OneTimeTearDown]
+        [OneTimeTearDown]
         public void RunAfterAnyTests()
         {
 //            browser.Quit();

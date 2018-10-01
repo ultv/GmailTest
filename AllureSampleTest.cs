@@ -9,7 +9,8 @@ using NUnit.Allure.Attributes;
 
 namespace GmailTest
 {
-    [TestFixture]
+    [TestFixture]    
+    [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
     class TestClass

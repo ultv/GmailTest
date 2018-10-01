@@ -11,16 +11,20 @@ namespace GmailTest
 {
     [TestFixture]
     [Parallelizable(ParallelScope.Fixtures)]
-    //[AllureNUnit]
-    //[AllureDisplayIgnored]
+    [AllureNUnit]
+    [AllureDisplayIgnored]
     public class NUnitGmailTest : NUnitSetupFixture
     {
         private IWebDriver browser = browser1;
 
-        //[Test(Description = "Главная страница")]
-        //[AllureTag("Regression")]
-        //[AllureOwner("Седов А")]
-        [Test]
+        [Test(Description = "Главная страница")]
+        [AllureTag("Regression")]
+        [AllureOwner("Седов А")]                
+        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]        
+        [AllureSuite("PassedSuite")]
+        [AllureSubSuite("NoAssert")]        
         public void Test_001()
         {
             // Arrange           
@@ -35,7 +39,14 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-        [Test]
+        [Test(Description = "Ввод логина")]
+        [AllureTag("Regression")]
+        [AllureOwner("Седов А")]
+        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureSuite("PassedSuite")]
+        [AllureSubSuite("NoAssert")]
         public void Test_002()
         {
             // Arrange                       
@@ -48,7 +59,14 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-        [Test]
+        [Test(Description = "Ввод пароля")]
+        [AllureTag("Regression")]
+        [AllureOwner("Седов А")]
+        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureSuite("PassedSuite")]
+        [AllureSubSuite("NoAssert")]
         public void Test_003()
         {
             // Arrange                       
@@ -61,7 +79,14 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-        [Test]
+        [Test(Description = "Поиск во входящих")]
+        [AllureTag("Regression")]
+        [AllureOwner("Седов А")]
+        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureSuite("PassedSuite")]
+        [AllureSubSuite("NoAssert")]
         public void Test_004()
         {
             // Arrange
@@ -78,7 +103,14 @@ namespace GmailTest
             Assert.AreNotEqual(actual, expected);
         }
 
-        [Test]
+        [Test(Description = "Подсчет и отправка")]
+        [AllureTag("Regression")]
+        [AllureOwner("Седов А")]
+        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureSuite("PassedSuite")]
+        [AllureSubSuite("NoAssert")]
         public void Test_005()
         {
             // Arrange            
