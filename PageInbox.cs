@@ -29,7 +29,7 @@ namespace GmailTest
         /// Поле ввод фразы для поиска.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "gb_bf")]        
-        private By SearchInput { get { return By.ClassName("gb_bf"); } }
+        private IWebElement SearchInput { get; set; }
 
         /// <summary>
         /// Панель опций.
@@ -47,14 +47,17 @@ namespace GmailTest
         /// <summary>
         /// Кнопка "Написать".
         /// </summary>        
-        [FindsBy(How = How.CssSelector, Using = "#\\3a 5e > div > div")]
+        [FindsBy(How = How.CssSelector, Using = ".T-I-KE")]
         private IWebElement WriteButton { get; set; }
 
         /// <summary>
         /// Поле ввода адреса получателя.        
         /// </summary>
         [FindsBy(How = How.Name, Using = "to")]
+        //[FindsBy(How = How.ClassName, Using = "wA")]
+        //[FindsBy(How = How.CssSelector, Using = ".l1 > input:nth-child(1)")]
         private IWebElement ToInput { get; set; }
+        private By ToInputBy { get { return By.Name("to"); } }
 
         /// <summary>
         /// Поле ввода темы письма.
@@ -67,6 +70,9 @@ namespace GmailTest
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "Am")]
         private IWebElement MessageArea { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "img.gb_Wa")]
+        private By LogoImage { get { return By.ClassName("img.gb_Wa"); } }
         
         /// <summary>
         /// Осуществляет поиск среди входящих писем.
@@ -74,10 +80,12 @@ namespace GmailTest
         /// <param name="text">Принимает фразу для поиска.</param>
         public void Search(string text)
         {
-            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
-            IWebElement input = ww.Until(ExpectedConditions.ElementIsVisible(SearchInput));
+                WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
+                IWebElement input = ww.Until(ExpectedConditions.ElementIsVisible(OptionsBar));
 
-            input.SendKeys(text + OpenQA.Selenium.Keys.Enter);
+            //System.Threading.Thread.Sleep(7000);
+            SearchInput.Clear();
+            SearchInput.SendKeys(text + OpenQA.Selenium.Keys.Enter);
         }
 
         public bool IsVissible()
@@ -99,10 +107,7 @@ namespace GmailTest
             WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
             ww.Until(ExpectedConditions.InvisibilityOfElementLocated(OptionsBar));            
 
-            List<IWebElement> elements = browser.FindElements(ResultSearch).ToList();
-
-            //MessageBox.Show(elements.Count.ToString());
-
+            List<IWebElement> elements = browser.FindElements(ResultSearch).ToList();           
             CountMail = elements.Count;
 
             return CountMail;
@@ -114,7 +119,16 @@ namespace GmailTest
         public void WriteMessage()
         {
             WriteButton.Click();
-            ToInput.SendKeys("ultv@inbox.ru");
+
+            //System.Threading.Thread.Sleep(2000);
+            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));            
+            IWebElement to = ww.Until(ExpectedConditions.ElementIsVisible(ToInputBy));
+
+            // На firefox без Click() и Clear() не срабатывает!!!
+            to.Click();
+            to.Clear();
+            to.SendKeys("ultv@inbox.ru");
+            
             SubjectInput.SendKeys("Тестовое задание. Седов");
             MessageArea.SendKeys($"Количество присланных писем = {CountMail} {OpenQA.Selenium.Keys.Control} {OpenQA.Selenium.Keys.Enter}");            
         }

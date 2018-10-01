@@ -16,6 +16,9 @@ namespace GmailTest
         public string Login { get; set; }
         [DataMember]
         public string Pass { get; set; }
+        [DataMember]
+        public string[] Uri { get; set; }
+
 
         /// <summary>
         /// Загружает логин и пароль из файла.
@@ -31,6 +34,7 @@ namespace GmailTest
                 ConfigReader config = (ConfigReader)jsonFormatter.ReadObject(fs);
                 Login = config.Login;
                 Pass = config.Pass;
+                Uri = config.Uri;
             }
         }
     }

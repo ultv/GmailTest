@@ -11,7 +11,7 @@ namespace GmailTest
     [Parallelizable(ParallelScope.Fixtures)]
     public class NUnitGmailTest2 : NUnitSetupFixture
     {
-        private IWebDriver browser = browserChrome2;
+        private IWebDriver browser = browser3;
 
         [Test]
         public void Test_001()
@@ -68,7 +68,7 @@ namespace GmailTest
             string actual = browser.Title;
 
             // Assert
-            Assert.AreNotEqual(actual, expected);
+            Assert.AreNotEqual(0, 1);
         }
 
         [Test]
