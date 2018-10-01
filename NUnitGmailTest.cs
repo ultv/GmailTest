@@ -5,17 +5,36 @@ using OpenQA.Selenium.Support.PageObjects;
 using NUnit.Framework;
 using NUnit.Allure.Core;
 using NUnit.Allure.Attributes;
+using OpenQA.Selenium.Remote;
+using System.Reflection;
 
 
 namespace GmailTest
 {
+
     [TestFixture]
     [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
-    public class NUnitGmailTest : NUnitSetupFixture
+    public class NUnitGmailTest
     {
-        private IWebDriver browser = browser1;
+        private IWebDriver browser;
+
+        
+
+        
+        public readonly string url = "http://gmail.com";
+
+        public string login;
+        public string pass;
+        public string[] uri;
+        public PageHome pageHome;
+        public PageInbox pageInbox;
+        public ConfigReader conf = new ConfigReader();
+        
+
+
+
 
         [Test(Description = "Главная страница")]
         [AllureTag("Regression")]
@@ -24,9 +43,21 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]        
         [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]        
+        //[AllureSubSuite("NoAssert")]        
         public void Test_001()
         {
+            conf.LoadConfig(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\config.json");
+            login = conf.Login;
+            pass = conf.Pass;
+            uri = conf.Uri;
+
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
+            browser = browser ?? new RemoteWebDriver(new Uri(uri[0]), capabilities);
+            browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+
+
+
             // Arrange           
             pageHome = new PageHome(browser);
             pageHome.Open(url);            
@@ -46,7 +77,7 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        //[AllureSubSuite("NoAssert")]
         public void Test_002()
         {
             // Arrange                       
@@ -66,7 +97,7 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        //[AllureSubSuite("NoAssert")]
         public void Test_003()
         {
             // Arrange                       
@@ -86,7 +117,7 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        //[AllureSubSuite("NoAssert")]
         public void Test_004()
         {
             // Arrange
@@ -110,7 +141,7 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        //[AllureSubSuite("NoAssert")]
         public void Test_005()
         {
             // Arrange            

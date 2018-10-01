@@ -3,7 +3,6 @@ using NUnit.Framework;
 using System;
 using System.Reflection;
 using OpenQA.Selenium.Remote;
-//using System.Security.Policy;
 
 namespace GmailTest
 {
@@ -11,7 +10,7 @@ namespace GmailTest
     public class NUnitSetupFixture
     {
         static public IWebDriver browser1;
-        static public IWebDriver browser2;
+        //static public IWebDriver browser2;
         static public IWebDriver browser3;
         public readonly string url = "http://gmail.com";
 
@@ -51,7 +50,11 @@ namespace GmailTest
         [OneTimeTearDown]
         public void RunAfterAnyTests()
         {
-//            browser.Quit();
+            //if(browser1 != null)
+            //    browser1.Quit();
+
+            //if (browser3 != null)
+            //    browser3.Quit();
         }
     }
 
