@@ -16,25 +16,25 @@ namespace GmailTest
     [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
-    public class NUnitGmailTest: Initialization
+    public class NUnitGmailTest : Initialization
     {
-        
+
         private Initialization init = new Initialization();
         private IWebDriver browser;
 
-        [Test(Description = "Главная страница")]
+        [Test(Description = "Открытие главной страницы")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]                        
+        [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
-        [AllureTms("TMS-12")]        
+        [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]        
+        [AllureSubSuite("NoAssert")]
         public void Test_001()
         {
             // Arrange
             browser = init.Start();
             pageHome = new PageHome(browser);
-            pageHome.Open(init.BaseUrl);            
+            pageHome.Open(init.BaseUrl);
             string expected = "Gmail";
 
             // Act
@@ -46,7 +46,7 @@ namespace GmailTest
 
         [Test(Description = "Ввод логина")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]        
+        [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
@@ -65,37 +65,51 @@ namespace GmailTest
 
         [Test(Description = "Ввод пароля")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]        
+        [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
         public void Test_003()
-        {
-            // Arrange                       
-            string expected = "Александр Седов";
-
-            // Act
-            string actual = pageHome.EnterPass(init.Pass).Text;
+        {                     
+            // Act         
+            bool actual = pageHome.IsVissibleProfileIdentifier();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.IsTrue(actual);
         }
 
-        [Test(Description = "Поиск во входящих")]
+        [Test(Description = "Ввод пароля")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]        
+        [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
         public void Test_004()
         {
+            // Arrange                       
+            string expected = "Александр Седов";            
+
+            // Act
+            string actual = pageHome.EnterPass(init.Pass).Text;
+
+            // Assert
+            Assert.AreEqual(actual, expected);            
+        }
+
+        [Test(Description = "Поиск во входящих")]
+        [AllureTag("Regression")]
+        [AllureOwner("Седов А")]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureSuite("PassedSuite")]
+        [AllureSubSuite("NoAssert")]
+        public void Test_005()
+        {
             // Arrange
             pageInbox = new PageInbox(browser);
-            pageInbox.Search(init.SearchText);
-            //int expected = pageInbox.ResultCount();            
-            //string expected = "Результаты поиска - ulsdet@gmail.com - Gmail";
+            pageInbox.Search(init.SearchText);            
             string expected = "Gmail";
 
             // Act            
@@ -107,22 +121,22 @@ namespace GmailTest
 
         [Test(Description = "Подсчет и отправка")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]        
+        [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
-        public void Test_005()
+        public void Test_006()
         {
             // Arrange            
             int count = pageInbox.ResultCount();
             pageInbox.WriteMessage();
 
             // Act            
-            int actual = 2;
+            bool actual = pageInbox.WaitHideElement(browser, pageInbox.GetElementToInput(), 15);
 
             // Assert
-            Assert.AreEqual(2, 2);
+            Assert.IsTrue(actual);
         }
 
     }
