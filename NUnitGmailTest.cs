@@ -28,13 +28,13 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]        
         [AllureSuite("PassedSuite")]
-        //[AllureSubSuite("NoAssert")]        
+        [AllureSubSuite("NoAssert")]        
         public void Test_001()
         {
             // Arrange
             browser = init.Start();
             pageHome = new PageHome(browser);
-            pageHome.Open(init.url);            
+            pageHome.Open(init.BaseUrl);            
             string expected = "Gmail";
 
             // Act
@@ -50,14 +50,14 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        //[AllureSubSuite("NoAssert")]
+        [AllureSubSuite("NoAssert")]
         public void Test_002()
         {
             // Arrange                       
             string expected = "Вход";
 
             // Act
-            string actual = pageHome.EnterLogin(init.login).Text;
+            string actual = pageHome.EnterLogin(init.Login).Text;
 
             // Assert
             Assert.AreEqual(actual, expected);
@@ -69,14 +69,14 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        //[AllureSubSuite("NoAssert")]
+        [AllureSubSuite("NoAssert")]
         public void Test_003()
         {
             // Arrange                       
             string expected = "Александр Седов";
 
             // Act
-            string actual = pageHome.EnterPass(init.pass).Text;
+            string actual = pageHome.EnterPass(init.Pass).Text;
 
             // Assert
             Assert.AreEqual(actual, expected);
@@ -88,12 +88,12 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        //[AllureSubSuite("NoAssert")]
+        [AllureSubSuite("NoAssert")]
         public void Test_004()
         {
             // Arrange
             pageInbox = new PageInbox(browser);
-            pageInbox.Search("Седов");
+            pageInbox.Search(init.SearchText);
             //int expected = pageInbox.ResultCount();            
             //string expected = "Результаты поиска - ulsdet@gmail.com - Gmail";
             string expected = "Gmail";
@@ -111,7 +111,7 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
-        //[AllureSubSuite("NoAssert")]
+        [AllureSubSuite("NoAssert")]
         public void Test_005()
         {
             // Arrange            

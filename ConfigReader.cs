@@ -16,26 +16,27 @@ namespace GmailTest
         public string Login { get; set; }
         [DataMember]
         public string Pass { get; set; }
-        [DataMember]
+        [DataMember]        
         public string[] Uri { get; set; }
+        [DataMember]
+        public string BaseUrl { get; set; }
+        [DataMember]
+        public string SearchText { get; set; }
 
-
-        /// <summary>
-        /// Загружает логин и пароль из файла.
-        /// </summary>
-        /// <param name="fileName">Принимает имя файла и путь.</param>        
-        public void LoadConfig(string fileName)
-        {            
-
+        public ConfigReader(string fileName)
+        {
+            
             using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
                 DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ConfigReader));
+                ConfigReader data = (ConfigReader)jsonFormatter.ReadObject(fs);
 
-                ConfigReader config = (ConfigReader)jsonFormatter.ReadObject(fs);
-                Login = config.Login;
-                Pass = config.Pass;
-                Uri = config.Uri;
+                Login = data.Login;
+                Pass = data.Pass;
+                Uri = data.Uri;
+                BaseUrl = data.BaseUrl;
+                SearchText = data.SearchText;
             }
-        }
+        }            
     }
 }
