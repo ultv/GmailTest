@@ -74,13 +74,13 @@
     <Compile Include="AllureSampleTest.cs" />
     <Compile Include="AllureSampleTest2.cs" />
     <Compile Include="ConfigReader.cs" />
+    <Compile Include="Initialization.cs" />
     <Compile Include="NUnitGmailTest.cs" />
     <Compile Include="PageHome.cs" />
     <Compile Include="PageInbox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="allureConfig.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

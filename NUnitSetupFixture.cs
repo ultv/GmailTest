@@ -3,9 +3,14 @@ using NUnit.Framework;
 using System;
 using System.Reflection;
 using OpenQA.Selenium.Remote;
+using NUnit.Allure.Core;
+using NUnit.Allure.Attributes;
 
 namespace GmailTest
 {
+    
+    [AllureNUnit]
+    [AllureDisplayIgnored]
     [SetUpFixture]
     public class NUnitSetupFixture
     {
@@ -55,6 +60,7 @@ namespace GmailTest
 
             //if (browser3 != null)
             //    browser3.Quit();
+            
         }
     }
 

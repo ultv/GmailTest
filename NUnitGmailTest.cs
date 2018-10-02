@@ -16,51 +16,25 @@ namespace GmailTest
     [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
-    public class NUnitGmailTest
+    public class NUnitGmailTest: Initialization
     {
+        
+        private Initialization init = new Initialization();
         private IWebDriver browser;
-
-        
-
-        
-        public readonly string url = "http://gmail.com";
-
-        public string login;
-        public string pass;
-        public string[] uri;
-        public PageHome pageHome;
-        public PageInbox pageInbox;
-        public ConfigReader conf = new ConfigReader();
-        
-
-
-
 
         [Test(Description = "Главная страница")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]                
-        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureOwner("Седов А")]                        
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]        
         [AllureSuite("PassedSuite")]
         //[AllureSubSuite("NoAssert")]        
         public void Test_001()
         {
-            conf.LoadConfig(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\config.json");
-            login = conf.Login;
-            pass = conf.Pass;
-            uri = conf.Uri;
-
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
-            browser = browser ?? new RemoteWebDriver(new Uri(uri[0]), capabilities);
-            browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
-
-
-
-            // Arrange           
+            // Arrange
+            browser = init.Start();
             pageHome = new PageHome(browser);
-            pageHome.Open(url);            
+            pageHome.Open(init.url);            
             string expected = "Gmail";
 
             // Act
@@ -72,8 +46,7 @@ namespace GmailTest
 
         [Test(Description = "Ввод логина")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureOwner("Седов А")]        
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
@@ -84,7 +57,7 @@ namespace GmailTest
             string expected = "Вход";
 
             // Act
-            string actual = pageHome.EnterLogin(conf.Login).Text;
+            string actual = pageHome.EnterLogin(init.login).Text;
 
             // Assert
             Assert.AreEqual(actual, expected);
@@ -92,8 +65,7 @@ namespace GmailTest
 
         [Test(Description = "Ввод пароля")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureOwner("Седов А")]        
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
@@ -104,7 +76,7 @@ namespace GmailTest
             string expected = "Александр Седов";
 
             // Act
-            string actual = pageHome.EnterPass(conf.Pass).Text;
+            string actual = pageHome.EnterPass(init.pass).Text;
 
             // Assert
             Assert.AreEqual(actual, expected);
@@ -112,8 +84,7 @@ namespace GmailTest
 
         [Test(Description = "Поиск во входящих")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureOwner("Седов А")]        
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
@@ -136,8 +107,7 @@ namespace GmailTest
 
         [Test(Description = "Подсчет и отправка")]
         [AllureTag("Regression")]
-        [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
+        [AllureOwner("Седов А")]        
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
