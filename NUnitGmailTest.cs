@@ -32,7 +32,7 @@ namespace GmailTest
         public void Test_001()
         {
             // Arrange
-            browser = init.Start();
+            browser = init.Start1();
             pageHome = new PageHome(browser);
             pageHome.Open(init.BaseUrl);
             string expected = "Gmail";

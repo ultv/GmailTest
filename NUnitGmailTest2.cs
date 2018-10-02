@@ -5,31 +5,36 @@ using OpenQA.Selenium.Support.PageObjects;
 using NUnit.Framework;
 using NUnit.Allure.Core;
 using NUnit.Allure.Attributes;
+using OpenQA.Selenium.Remote;
+using System.Reflection;
 
 
 namespace GmailTest
 {
+
     [TestFixture]
     [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
-    public class NUnitGmailTest2 : NUnitSetupFixture
+    public class NUnitGmailTest2 : Initialization
     {
-        private IWebDriver browser = browser3;
 
-        [Test(Description = "Главная страница")]
+        private Initialization init = new Initialization();
+        private IWebDriver browser;
+
+        [Test(Description = "Открытие главной страницы")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
         public void Test_001()
         {
-            // Arrange           
+            // Arrange
+            browser = init.Start2();
             pageHome = new PageHome(browser);
-            pageHome.Open(url);
+            pageHome.Open(init.BaseUrl);
             string expected = "Gmail";
 
             // Act
@@ -39,10 +44,9 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-        [Test(Description = "Главная страница")]
+        [Test(Description = "Ввод логина")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
@@ -53,75 +57,86 @@ namespace GmailTest
             string expected = "Вход";
 
             // Act
-            string actual = pageHome.EnterLogin(conf.Login).Text;
+            string actual = pageHome.EnterLogin(init.Login).Text;
 
             // Assert
             Assert.AreEqual(actual, expected);
         }
 
-        [Test(Description = "Главная страница")]
+        [Test(Description = "Ввод пароля")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
         public void Test_003()
         {
-            // Arrange                       
-            string expected = "Александр Седов";
-
-            // Act
-            string actual = pageHome.EnterPass(conf.Pass).Text;
+            // Act         
+            bool actual = pageHome.IsVissibleProfileIdentifier();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.IsTrue(actual);
         }
 
-        [Test(Description = "Главная страница")]
+        [Test(Description = "Ввод пароля")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
         public void Test_004()
         {
-            // Arrange
-            pageInbox = new PageInbox(browser);
-            pageInbox.Search("Седов");
-            //int expected = pageInbox.ResultCount();            
-            //string expected = "Результаты поиска - ulsdet@gmail.com - Gmail";
-            string expected = "Gmail";
+            // Arrange                       
+            string expected = "Александр Седов";
 
-            // Act            
-            string actual = browser.Title;
+            // Act
+            string actual = pageHome.EnterPass(init.Pass).Text;
 
             // Assert
-            Assert.AreNotEqual(0, 1);
+            Assert.AreEqual(actual, expected);
         }
 
-        [Test(Description = "Главная страница")]
+        [Test(Description = "Поиск во входящих")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
-        //[AllureSeverity(SeverityLevel.critical)]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
         public void Test_005()
         {
+            // Arrange
+            pageInbox = new PageInbox(browser);
+            pageInbox.Search(init.SearchText);
+            string expected = "Gmail";
+
+            // Act            
+            string actual = browser.Title;
+
+            // Assert
+            Assert.AreNotEqual(actual, expected);
+        }
+
+        [Test(Description = "Подсчет и отправка")]
+        [AllureTag("Regression")]
+        [AllureOwner("Седов А")]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureSuite("PassedSuite")]
+        [AllureSubSuite("NoAssert")]
+        public void Test_006()
+        {
             // Arrange            
             int count = pageInbox.ResultCount();
             pageInbox.WriteMessage();
 
             // Act            
-            int actual = 2;
+            bool actual = pageInbox.WaitHideElement(browser, pageInbox.GetElementToInput(), 15);
 
             // Assert
-            Assert.AreEqual(2, 2);
+            Assert.IsTrue(actual);
         }
 
     }
