@@ -22,7 +22,7 @@ namespace GmailTest
         private Initialization init = new Initialization();
         private IWebDriver browser;
 
-        [Test(Description = "Открытие главной страницы")]
+        [Test(Description = "Открытие главной страницы. Firefox.")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -44,7 +44,7 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-        [Test(Description = "Ввод логина")]
+        [Test(Description = "Ввод логина. Firefox.")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -63,7 +63,7 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-        [Test(Description = "Ввод пароля")]
+        [Test(Description = "Вход в профиль. Firefox.")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -79,7 +79,7 @@ namespace GmailTest
             Assert.IsTrue(actual);
         }
 
-        [Test(Description = "Ввод пароля")]
+        [Test(Description = "Ввод пароля. Firefox.")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -98,7 +98,7 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-        [Test(Description = "Поиск во входящих")]
+        [Test(Description = "Поиск во входящих. Firefox.")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -119,7 +119,7 @@ namespace GmailTest
             Assert.AreNotEqual(actual, expected);
         }
 
-        [Test(Description = "Подсчет и отправка")]
+        [Test(Description = "Подсчет и отправка. Firefox.")]
         [AllureTag("Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]

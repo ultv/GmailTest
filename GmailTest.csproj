@@ -71,8 +71,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllureSampleTest.cs" />
-    <Compile Include="AllureSampleTest2.cs" />
     <Compile Include="ConfigReader.cs" />
     <Compile Include="Initialization.cs" />
     <Compile Include="NUnitGmailTest.cs" />
