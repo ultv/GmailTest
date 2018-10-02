@@ -123,7 +123,7 @@ namespace GmailTest
         /// <summary>
         /// Заполняет и отправляет сообщение.
         /// </summary>
-        public void WriteMessage()
+        public void WriteMessage(Initialization init)
         {          
             string mailTo = GetMailTo();                                   
             DelReplyButton.Click();
@@ -135,8 +135,8 @@ namespace GmailTest
             sendTo.Clear();
             sendTo.SendKeys(mailTo);
             
-            SubjectInput.SendKeys("Тестовое задание. Седов");
-            MessageArea.SendKeys($"Количество присланных писем = {CountMail} {OpenQA.Selenium.Keys.Control} {OpenQA.Selenium.Keys.Enter}");            
+            SubjectInput.SendKeys(init.Subject);
+            MessageArea.SendKeys($"{init.Message} {CountMail} {OpenQA.Selenium.Keys.Control} {OpenQA.Selenium.Keys.Enter}");            
         }
 
         /// <summary>

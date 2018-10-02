@@ -22,13 +22,15 @@ namespace GmailTest
         public string BaseUrl { get { return conf.BaseUrl; } }
         public string Login { get { return conf.Login; } }
         public string Pass { get { return conf.Pass; } }
-        public string SearchText { get { return conf.SearchText; } }        
+        public string SearchText { get { return conf.SearchText; } }
+        public string Subject { get { return conf.Subject; } }
+        public string Message { get { return conf.Message; } }
 
         public IWebDriver Start1()
         {            
             DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.SetCapability(CapabilityType.BrowserName, "chrome");
-            browser1 = browser1 ?? new RemoteWebDriver(new Uri(conf.Uri[0]), capabilities);
+            capabilities.SetCapability(CapabilityType.BrowserName, conf.Node[0].Capabilities);
+            browser1 = browser1 ?? new RemoteWebDriver(new Uri(conf.Node[0].Uri), capabilities);
             browser1.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
 
             return browser1;
@@ -37,8 +39,8 @@ namespace GmailTest
         public IWebDriver Start2()
         {
             DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.SetCapability(CapabilityType.BrowserName, "firefox");
-            browser2 = browser2 ?? new RemoteWebDriver(new Uri(conf.Uri[2]), capabilities);
+            capabilities.SetCapability(CapabilityType.BrowserName, conf.Node[1].Capabilities);
+            browser2 = browser2 ?? new RemoteWebDriver(new Uri(conf.Node[1].Uri), capabilities);
             browser2.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
 
             return browser2;

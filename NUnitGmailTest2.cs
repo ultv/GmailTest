@@ -23,13 +23,13 @@ namespace GmailTest
         private IWebDriver browser;
 
         [Test(Description = "Открытие главной страницы. Firefox.")]
-        [AllureTag("Regression")]
+        [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
-        public void Test_001()
+        public void GmailTest_001()
         {
             // Arrange
             browser = init.Start2();
@@ -45,13 +45,13 @@ namespace GmailTest
         }
 
         [Test(Description = "Ввод логина. Firefox.")]
-        [AllureTag("Regression")]
+        [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
-        public void Test_002()
+        public void GmailTest_002()
         {
             // Arrange                       
             string expected = "Вход";
@@ -64,13 +64,13 @@ namespace GmailTest
         }
 
         [Test(Description = "Вход в профиль. Firefox.")]
-        [AllureTag("Regression")]
+        [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
-        public void Test_003()
+        public void GmailTest_003()
         {
             // Act         
             bool actual = pageHome.IsVissibleProfileIdentifier();
@@ -80,13 +80,13 @@ namespace GmailTest
         }
 
         [Test(Description = "Ввод пароля. Firefox.")]
-        [AllureTag("Regression")]
+        [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
-        public void Test_004()
+        public void GmailTest_004()
         {
             // Arrange                       
             string expected = "Александр Седов";
@@ -99,13 +99,13 @@ namespace GmailTest
         }
 
         [Test(Description = "Поиск во входящих. Firefox.")]
-        [AllureTag("Regression")]
+        [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
-        public void Test_005()
+        public void GmailTest_005()
         {
             // Arrange
             pageInbox = new PageInbox(browser);
@@ -120,17 +120,17 @@ namespace GmailTest
         }
 
         [Test(Description = "Подсчет и отправка. Firefox.")]
-        [AllureTag("Regression")]
+        [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
-        public void Test_006()
+        public void GmailTest_006()
         {
             // Arrange            
             int count = pageInbox.ResultCount();
-            pageInbox.WriteMessage();
+            pageInbox.WriteMessage(init);
 
             // Act            
             bool actual = pageInbox.WaitHideElement(browser, pageInbox.GetElementToInput(), 15);

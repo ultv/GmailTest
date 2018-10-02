@@ -10,18 +10,32 @@ using System.IO;
 namespace GmailTest
 {
     [DataContract]
+    public class Hub
+    {
+        [DataMember]
+        public string Uri;
+        [DataMember]
+        public string Capabilities;
+    }
+
+
+    [DataContract]
     public class ConfigReader
     {
         [DataMember]
         public string Login { get; set; }
         [DataMember]
-        public string Pass { get; set; }
+        public string Pass { get; set; }                
         [DataMember]        
-        public string[] Uri { get; set; }
+        public Hub [] Node { get; set; }
         [DataMember]
         public string BaseUrl { get; set; }
         [DataMember]
         public string SearchText { get; set; }
+        [DataMember]
+        public string Subject { get; set; }
+        [DataMember]
+        public string Message { get; set; }
 
         public ConfigReader(string fileName)
         {
@@ -33,9 +47,11 @@ namespace GmailTest
 
                 Login = data.Login;
                 Pass = data.Pass;
-                Uri = data.Uri;
+                Node = data.Node;
                 BaseUrl = data.BaseUrl;
                 SearchText = data.SearchText;
+                Subject = data.Subject;
+                Message = data.Message;
             }
         }            
     }
