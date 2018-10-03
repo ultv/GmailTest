@@ -55,8 +55,7 @@ namespace GmailTest
 
         public IWebDriver Start(IWebDriver browser)
         {
-            int count = CountBrowsers.Next();
-            //numTest--;
+            int count = CountBrowsers.Next();            
 
             if ( count < conf.Node.Length)
             {
