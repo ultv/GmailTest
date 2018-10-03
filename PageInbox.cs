@@ -131,9 +131,9 @@ namespace GmailTest
             WriteButton.Click();
             IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);
 
-            // На firefox без Click() и Clear() не срабатывает!!!
+            // На firefox без Click() и Clear() не срабатывает!!!            
+            sendTo.Click();
             sendTo.Clear();
-            sendTo.Click();            
             sendTo.SendKeys(mailTo);            
 
             SubjectInput.SendKeys(init.Subject);            
