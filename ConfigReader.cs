@@ -10,32 +10,59 @@ using System.IO;
 namespace GmailTest
 {
     [DataContract]
+    public class Hub
+    {
+        [DataMember]
+        public string Uri;
+        [DataMember]
+        public string Capabilities;
+    }
+
+    [DataContract]
     public class ConfigReader
     {
         [DataMember]
         public string Login { get; set; }
         [DataMember]
-        public string Pass { get; set; }
+        public string Pass { get; set; }                
+        [DataMember]        
+        public Hub [] Node { get; set; }
         [DataMember]
-        public string[] Uri { get; set; }
+        public string BaseUrl { get; set; }
+        [DataMember]
+        public string SearchKey { get; set; }
+        [DataMember]
+        public string SearchText { get; set; }
+        [DataMember]
+        public string Subject { get; set; }
+        [DataMember]
+        public string Message { get; set; }
 
-
-        /// <summary>
-        /// Загружает логин и пароль из файла.
-        /// </summary>
-        /// <param name="fileName">Принимает имя файла и путь.</param>        
-        public void LoadConfig(string fileName)
-        {            
-
-            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+        public ConfigReader(string fileName)
+        {
+            try
             {
-                DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ConfigReader));
+                using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                {
 
-                ConfigReader config = (ConfigReader)jsonFormatter.ReadObject(fs);
-                Login = config.Login;
-                Pass = config.Pass;
-                Uri = config.Uri;
+                
+                    DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ConfigReader));
+                    ConfigReader data = (ConfigReader)jsonFormatter.ReadObject(fs);                    
+
+                    Login = data.Login;
+                    Pass = data.Pass;
+                    Node = data.Node;
+                    BaseUrl = data.BaseUrl;
+                    SearchKey = data.SearchKey;
+                    SearchText = data.SearchText;
+                    Subject = data.Subject;
+                    Message = data.Message;
+                }                                             
             }
-        }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("Поместите файл config.json в директорию /bin/Debug/");
+            }
+        }            
     }
 }

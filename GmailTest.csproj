@@ -39,6 +39,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Allure.Commons, Version=2.3.64.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Allure.Commons.2.3.64.1\lib\net45\Allure.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeTypesMap, Version=1.0.3.0, Culture=neutral, PublicKeyToken=1b320cc08ad5aa89, processorArchitecture=MSIL">
+      <HintPath>packages\MimeTypesMap.1.0.3\lib\net45\MimeTypesMap.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NUnit.Allure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\NUnit.Allure.1.0.4\lib\net45\NUnit.Allure.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -60,9 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigReader.cs" />
+    <Compile Include="Initialization.cs" />
     <Compile Include="NUnitGmailTest.cs" />
     <Compile Include="NUnitGmailTest2.cs" />
-    <Compile Include="NUnitSetupFixture.cs" />
     <Compile Include="PageHome.cs" />
     <Compile Include="PageInbox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

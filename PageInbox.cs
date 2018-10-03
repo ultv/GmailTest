@@ -38,7 +38,7 @@ namespace GmailTest
         private By OptionsBar { get { return By.ClassName("a35"); } }
 
         /// <summary>
-        /// Письма в результатах поиска.
+        /// Письма с пометкой "входящие" в результатах поиска.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "av")]
         //private IWebElement ResultSearch { get; set; }        
@@ -49,13 +49,12 @@ namespace GmailTest
         /// </summary>        
         [FindsBy(How = How.CssSelector, Using = ".T-I-KE")]
         private IWebElement WriteButton { get; set; }
+        private By WriteButtonBy { get { return By.CssSelector(".T-I-KE"); } }
 
         /// <summary>
         /// Поле ввода адреса получателя.        
         /// </summary>
-        [FindsBy(How = How.Name, Using = "to")]
-        //[FindsBy(How = How.ClassName, Using = "wA")]
-        //[FindsBy(How = How.CssSelector, Using = ".l1 > input:nth-child(1)")]
+        [FindsBy(How = How.Name, Using = "to")]        
         private IWebElement ToInput { get; set; }
         private By ToInputBy { get { return By.Name("to"); } }
 
@@ -73,42 +72,50 @@ namespace GmailTest
 
         [FindsBy(How = How.CssSelector, Using = "img.gb_Wa")]
         private By LogoImage { get { return By.ClassName("img.gb_Wa"); } }
-        
+
+        /// <summary>
+        /// Кнопка ответить.
+        /// </summary>
+        [FindsBy(How = How.ClassName, Using = "ams")]
+        private IWebElement ReplyButton { get; set; }
+
+        /// <summary>
+        /// Адрес отправителя.
+        /// </summary>
+        [FindsBy(How = How.ClassName, Using = "oL")]
+        private IWebElement MailToText { get; set; }
+        private By MailToTextBy { get { return By.ClassName("oL"); } }
+
+        /// <summary>
+        /// Кнопка удалить черновик.
+        /// </summary>
+        [FindsBy(How = How.ClassName, Using = "og")]
+        private IWebElement DelReplyButton { get; set; }
+
+        private By ErrorMessage { get { return By.ClassName("Kj-JD-Jz"); } }
+
         /// <summary>
         /// Осуществляет поиск среди входящих писем.
         /// </summary>
         /// <param name="text">Принимает фразу для поиска.</param>
         public void Search(string text)
-        {
-                WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
-                IWebElement input = ww.Until(ExpectedConditions.ElementIsVisible(OptionsBar));
-
-            //System.Threading.Thread.Sleep(7000);
+        {           
+            WaitShowElement(browser, OptionsBar, 15);            
             SearchInput.Clear();
             SearchInput.SendKeys(text + OpenQA.Selenium.Keys.Enter);
-        }
-
-        public bool IsVissible()
-        {                        
-            List<IWebElement> elements = browser.FindElements(OptionsBar).ToList();            
-
-            if (elements.Count > 0)
-                return true;
-            else return false;
-        }
+        }                
 
         /// <summary>
         /// Проверяет результаты поиска.
         /// </summary>
         /// <returns>Возвращает количестов найденных писем.</returns>
         public int ResultCount()
-        {
-            ///???
-            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
-            ww.Until(ExpectedConditions.InvisibilityOfElementLocated(OptionsBar));            
-
+        {           
             List<IWebElement> elements = browser.FindElements(ResultSearch).ToList();           
             CountMail = elements.Count;
+
+            if (CountMail > 0)
+                elements[0].Click();
 
             return CountMail;
         }
@@ -116,23 +123,65 @@ namespace GmailTest
         /// <summary>
         /// Заполняет и отправляет сообщение.
         /// </summary>
-        public void WriteMessage()
-        {
-            WriteButton.Click();
-
-            //System.Threading.Thread.Sleep(2000);
-            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));            
-            IWebElement to = ww.Until(ExpectedConditions.ElementIsVisible(ToInputBy));
-
-            // На firefox без Click() и Clear() не срабатывает!!!
-            to.Click();
-            to.Clear();
-            to.SendKeys("ultv@inbox.ru");
+        public void WriteMessage(Initialization init)
+        {          
+            string mailTo = GetMailTo();
             
-            SubjectInput.SendKeys("Тестовое задание. Седов");
-            MessageArea.SendKeys($"Количество присланных писем = {CountMail} {OpenQA.Selenium.Keys.Control} {OpenQA.Selenium.Keys.Enter}");            
+            DelReplyButton.Click();
+            WriteButton.Click();
+            IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);
+
+            // На firefox без Click() и Clear() не срабатывает!!!            
+            sendTo.Click();
+            sendTo.Clear();
+            sendTo.SendKeys(mailTo);            
+
+            SubjectInput.SendKeys(init.Subject);            
+            MessageArea.SendKeys(init.Message + CountMail);            
+            MessageArea.SendKeys(OpenQA.Selenium.Keys.Control + OpenQA.Selenium.Keys.Enter);
+            
         }
 
-        
+        /// <summary>
+        /// Получает адрес отпраителя письма.
+        /// </summary>
+        /// <returns>Отправляет адрес отправителя.</returns>
+        public string GetMailTo()
+        {
+            ReplyButton.Click();           
+            IWebElement mailTo = WaitShowElement(browser, MailToTextBy, 15);
+
+            return mailTo.Text;
+        }
+
+        /// <summary>
+        /// Ожидание появления элемента.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="element"></param>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
+        public IWebElement WaitShowElement(IWebDriver browser, By element, int seconds)
+        {
+            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
+            return wait.Until(ExpectedConditions.ElementIsVisible(element));
+        }
+
+        /// <summary>
+        /// Ожидание сокрытия элемента.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="element"></param>
+        /// <param name="seconds"></param>
+        public bool WaitHideElement(IWebDriver browser, By element, int seconds)
+        {
+            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
+            return wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
+        }
+
+        public By GetElementToInput()
+        {
+            return ToInputBy;
+        }       
     }
 }

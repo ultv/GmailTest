@@ -66,16 +66,37 @@ namespace GmailTest
         /// <param name="pass">Принимает пароль.</param>
         /// <returns>Возвращает текст приветствия.</returns>
         public IWebElement EnterPass(string pass)
-        {
-            WebDriverWait ww = new WebDriverWait(browser, TimeSpan.FromSeconds(15));
-            IWebElement profile = ww.Until(ExpectedConditions.ElementIsVisible(ProfileText));
+        {            
+            WaitShowElement(browser, ProfileText, 15);
 
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(500);            
             LoginInput.SendKeys(pass);
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(500);            
             LoginInput.SendKeys(OpenQA.Selenium.Keys.Enter);
 
             return WelcomeText;
+        }
+
+        /// <summary>
+        /// Ожидание появления элемента.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="element"></param>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
+        public IWebElement WaitShowElement(IWebDriver browser, By element, int seconds)
+        {
+            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
+            return wait.Until(ExpectedConditions.ElementIsVisible(element));
+        }
+
+        public bool IsVissibleProfileIdentifier()
+        {
+            List<IWebElement> elements = browser.FindElements(ProfileText).ToList();
+
+            if (elements.Count > 0)
+                return true;
+            else return false;
         }
     }
 }
