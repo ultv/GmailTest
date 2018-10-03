@@ -89,13 +89,13 @@ namespace GmailTest
         public void GmailTest_004()
         {
             // Arrange                       
-            string expected = "Александр Седов";
+            string expected = $"Добро пожаловать! {init.SearchText}";
 
             // Act
             string actual = pageHome.EnterPass(init.Pass).Text;
 
-            // Assert
-            Assert.AreEqual(actual, expected);
+            // Assert            
+            StringAssert.Contains(actual, expected);
         }
 
         [Test(Description = "Поиск во входящих. Firefox.")]
@@ -109,7 +109,7 @@ namespace GmailTest
         {
             // Arrange
             pageInbox = new PageInbox(browser);
-            pageInbox.Search(init.SearchText);
+            pageInbox.Search(init.SearchKey + init.SearchText);
             string expected = "Gmail";
 
             // Act            

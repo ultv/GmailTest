@@ -98,9 +98,7 @@ namespace GmailTest
         /// <param name="text">Принимает фразу для поиска.</param>
         public void Search(string text)
         {           
-            WaitShowElement(browser, OptionsBar, 15);
-
-            //System.Threading.Thread.Sleep(7000);
+            WaitShowElement(browser, OptionsBar, 15);            
             SearchInput.Clear();
             SearchInput.SendKeys(text + OpenQA.Selenium.Keys.Enter);
         }       

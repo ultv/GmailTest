@@ -90,7 +90,7 @@ namespace GmailTest
         public void GmailTest_004()
         {
             // Arrange                       
-            string expected = "Добро пожаловать! Александр Седов";            
+            string expected = $"Добро пожаловать! {init.SearchText}";            
 
             // Act
             string actual = pageHome.EnterPass(init.Pass).Text;
@@ -110,7 +110,7 @@ namespace GmailTest
         {
             // Arrange
             pageInbox = new PageInbox(browser);
-            pageInbox.Search(init.SearchText);            
+            pageInbox.Search(init.SearchKey + init.SearchText);            
             string expected = "Gmail";
 
             // Act            

@@ -31,6 +31,8 @@ namespace GmailTest
         [DataMember]
         public string BaseUrl { get; set; }
         [DataMember]
+        public string SearchKey { get; set; }
+        [DataMember]
         public string SearchText { get; set; }
         [DataMember]
         public string Subject { get; set; }
@@ -39,19 +41,28 @@ namespace GmailTest
 
         public ConfigReader(string fileName)
         {
-            
-            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            try
             {
-                DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ConfigReader));
-                ConfigReader data = (ConfigReader)jsonFormatter.ReadObject(fs);
+                using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                {
 
-                Login = data.Login;
-                Pass = data.Pass;
-                Node = data.Node;
-                BaseUrl = data.BaseUrl;
-                SearchText = data.SearchText;
-                Subject = data.Subject;
-                Message = data.Message;
+                
+                    DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ConfigReader));
+                    ConfigReader data = (ConfigReader)jsonFormatter.ReadObject(fs);
+
+                    Login = data.Login;
+                    Pass = data.Pass;
+                    Node = data.Node;
+                    BaseUrl = data.BaseUrl;
+                    SearchKey = data.SearchKey;
+                    SearchText = data.SearchText;
+                    Subject = data.Subject;
+                    Message = data.Message;
+                }                                             
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("Поместите файл config.json в директорию /bin/Debug/");
             }
         }            
     }

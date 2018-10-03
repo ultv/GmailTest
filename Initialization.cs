@@ -22,6 +22,7 @@ namespace GmailTest
         public string BaseUrl { get { return conf.BaseUrl; } }
         public string Login { get { return conf.Login; } }
         public string Pass { get { return conf.Pass; } }
+        public string SearchKey { get { return conf.SearchKey; } }
         public string SearchText { get { return conf.SearchText; } }
         public string Subject { get { return conf.Subject; } }
         public string Message { get { return conf.Message; } }
