@@ -78,6 +78,7 @@
     <Compile Include="PageHome.cs" />
     <Compile Include="PageInbox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WaitAssistant.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

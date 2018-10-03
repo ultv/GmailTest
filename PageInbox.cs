@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 
 namespace GmailTest
 {
-    public class PageInbox
+    public class PageInbox : WaitAssistant
     {
         public PageInbox(IWebDriver browser)
         {
@@ -78,7 +75,7 @@ namespace GmailTest
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "ams")]
         private IWebElement ReplyButton { get; set; }
-        public By ReplyButtonBy { get { return By.ClassName("ams"); } }
+        private By ReplyButtonBy { get { return By.ClassName("ams"); } }
 
         /// <summary>
         /// Адрес отправителя.
@@ -91,21 +88,24 @@ namespace GmailTest
         /// Кнопка удалить черновик.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "og")]
-        private IWebElement DelReplyButton { get; set; }
+        private IWebElement DelReplyButton { get; set; }       
 
-        private By ErrorMessage { get { return By.ClassName("Kj-JD-Jz"); } }
-
-        public By NonSortedText { get { return By.ClassName("aKz"); } }
+        /// <summary>
+        /// Заголовок "Несортированные письма"
+        /// </summary>
+        private By NonSortedText { get { return By.ClassName("aKz"); } }
 
         /// <summary>
         /// Осуществляет поиск среди входящих писем.
         /// </summary>
         /// <param name="text">Принимает фразу для поиска.</param>
-        public void Search(string text)
+        public bool Search(string text)
         {           
             WaitShowElement(browser, OptionsBar, 15);            
             SearchInput.Clear();
             SearchInput.SendKeys(text + OpenQA.Selenium.Keys.Enter);
+
+            return WaitHideElement(browser, NonSortedText, 15);
         }                
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace GmailTest
         /// <summary>
         /// Заполняет и отправляет сообщение.
         /// </summary>
-        public void WriteMessage(Initialization init)
+        public bool WriteMessage(string subject, string message)
         {          
             string mailTo = GetMailTo();
             
@@ -139,10 +139,11 @@ namespace GmailTest
             sendTo.Clear();
             sendTo.SendKeys(mailTo);            
 
-            SubjectInput.SendKeys(init.Subject);            
-            MessageArea.SendKeys(init.Message + CountMail);            
+            SubjectInput.SendKeys(subject);            
+            MessageArea.SendKeys(message + CountMail);            
             MessageArea.SendKeys(OpenQA.Selenium.Keys.Control + OpenQA.Selenium.Keys.Enter);
-            
+
+            return WaitHideElement(browser, ToInputBy, 15);
         }
 
         /// <summary>
@@ -157,43 +158,6 @@ namespace GmailTest
             return mailTo.Text;
         }
 
-        /// <summary>
-        /// Ожидание появления элемента.
-        /// </summary>
-        /// <param name="browser"></param>
-        /// <param name="element"></param>
-        /// <param name="seconds"></param>
-        /// <returns></returns>
-        public IWebElement WaitShowElement(IWebDriver browser, By element, int seconds)
-        {
-            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
-            return wait.Until(ExpectedConditions.ElementIsVisible(element));
-        }
-
-        /// <summary>
-        /// Ожидание сокрытия элемента.
-        /// </summary>
-        /// <param name="browser"></param>
-        /// <param name="element"></param>
-        /// <param name="seconds"></param>
-        public bool WaitHideElement(IWebDriver browser, By element, int seconds)
-        {
-            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
-            return wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
-        }
-
-        public By GetElementToInput()
-        {
-            return ToInputBy;
-        }
-
-        public bool IsVissibleReplyButton()
-        {
-            List<IWebElement> elements = browser.FindElements(ReplyButtonBy).ToList();
-
-            if (elements.Count > 0)
-                return true;
-            else return false;
-        }
+        
     }
 }

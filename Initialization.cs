@@ -1,13 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium.Remote;
 using System.Reflection;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System.Threading;
 
 namespace GmailTest
@@ -50,24 +45,24 @@ namespace GmailTest
         public string SearchText { get { return conf.SearchText; } }
         public string Subject { get { return conf.Subject; } }
         public string Message { get { return conf.Message; } }
-        //public static MultiThreadingCounter CountBrowsers;
+        public static MultiThreadingCounter CountBrowsers;
         
         public Initialization()
         {
             conf = new ConfigReader(configPath);
-            //MultiThreadingCounter CountBrowsers = new MultiThreadingCounter();
+            CountBrowsers = new MultiThreadingCounter();
         }
 
-        public IWebDriver Start(IWebDriver browser, int numTest)
+        public IWebDriver Start(IWebDriver browser)
         {
-            //int count = CountBrowsers.Next();
-            numTest--;
+            int count = CountBrowsers.Next();
+            //numTest--;
 
-            if ( numTest < conf.Node.Length)
+            if ( count < conf.Node.Length)
             {
                 DesiredCapabilities capabilities = new DesiredCapabilities();            
-                capabilities.SetCapability(CapabilityType.BrowserName, conf.Node[numTest].Capabilities);
-                browser = browser ?? new RemoteWebDriver(new Uri(conf.Node[numTest].Uri), capabilities);
+                capabilities.SetCapability(CapabilityType.BrowserName, conf.Node[count].Capabilities);
+                browser = browser ?? new RemoteWebDriver(new Uri(conf.Node[count].Uri), capabilities);
                 browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
                                                
                 return browser;

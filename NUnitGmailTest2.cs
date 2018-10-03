@@ -1,12 +1,7 @@
-﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Support.PageObjects;
+﻿using OpenQA.Selenium;
 using NUnit.Framework;
 using NUnit.Allure.Core;
 using NUnit.Allure.Attributes;
-using OpenQA.Selenium.Remote;
-using System.Reflection;
 
 
 namespace GmailTest
@@ -19,7 +14,7 @@ namespace GmailTest
     public class NUnitGmailTest2 : Initialization
     {
 
-        private Initialization init = new Initialization();
+        //private Initialization init = new Initialization();
         private IWebDriver browser;
 
         [Test(Description = "Открытие главной страницы. Firefox.")]
@@ -30,11 +25,10 @@ namespace GmailTest
         [AllureSuite("PassedSuite")]       
         public void GmailTest_001()
         {
-            // Arrange
-            //browser = init.Start2();
-            browser = init.Start(browser, 2);            
-            init.pageHome = new PageHome(browser);
-            init.pageHome.Open(init.BaseUrl);
+            // Arrange            
+            browser = Start(browser);            
+            pageHome = new PageHome(browser);
+            pageHome.Open(BaseUrl);
             string expected = "Gmail";
 
             // Act
@@ -54,10 +48,10 @@ namespace GmailTest
         {
             // Arrange                       
             string expected = "Забыли пароль?";
-            init.pageHome.EnterLogin(init.Login);
+            pageHome.EnterLogin(Login);
 
             // Act
-            string actual = init.pageHome.GetForgotPasswordText();
+            string actual = pageHome.GetForgotPasswordText();
 
             // Assert
             Assert.AreEqual(actual, expected);
@@ -72,7 +66,7 @@ namespace GmailTest
         public void GmailTest_003()
         {
             // Act         
-            bool actual = init.pageHome.IsVissibleProfileIdentifier();
+            bool actual = pageHome.IsVissibleProfileIdentifier();
 
             // Assert
             Assert.IsTrue(actual);
@@ -87,10 +81,10 @@ namespace GmailTest
         public void GmailTest_004()
         {
             // Arrange                       
-            string expected = $"Добро пожаловать! {init.SearchText}";
+            string expected = $"Добро пожаловать! {SearchText}";
 
             // Act
-            string actual = init.pageHome.EnterPass(init.Pass).Text;
+            string actual = pageHome.EnterPass(Pass).Text;
 
             // Assert            
             StringAssert.Contains(actual, expected);
@@ -105,12 +99,10 @@ namespace GmailTest
         public void GmailTest_005()
         {
             // Arrange
-            init.pageInbox = new PageInbox(browser);
-            init.pageInbox.Search(init.SearchKey + init.SearchText);
-            string expected = "Gmail";
+            pageInbox = new PageInbox(browser);            
 
             // Act            
-            bool actual = init.pageInbox.WaitHideElement(browser, init.pageInbox.NonSortedText, 15);
+            bool actual = pageInbox.Search(SearchKey + SearchText);
 
             // Assert
             Assert.IsTrue(actual);
@@ -125,11 +117,10 @@ namespace GmailTest
         public void GmailTest_006()
         {
             // Arrange            
-            int count = init.pageInbox.ResultCount();
-            init.pageInbox.WriteMessage(init);
+            int count = pageInbox.ResultCount();            
 
             // Act            
-            bool actual = init.pageInbox.WaitHideElement(browser, init.pageInbox.GetElementToInput(), 15);
+            bool actual = pageInbox.WriteMessage(Subject, Message);
 
             // Assert
             Assert.IsTrue(actual);
