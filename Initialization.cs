@@ -50,12 +50,7 @@ namespace GmailTest
 
         public IWebDriver Start(IWebDriver browser)
         {
-            if (CountBrowsers > conf.Node.Length)
-            {
-                Console.WriteLine("Зарегестрируйте новый Node узел и запишите параметры в config.json");
-                return null;
-            }
-            else
+            if (CountBrowsers < conf.Node.Length)
             {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.SetCapability(CapabilityType.BrowserName, conf.Node[CountBrowsers].Capabilities);
@@ -64,6 +59,11 @@ namespace GmailTest
                 CountBrowsers++;
 
                 return browser;
+            }
+            else
+            {                
+                Console.WriteLine("Зарегестрируйте новый Node узел и запишите параметры в config.json");
+                return null;
             }            
         }
     }
