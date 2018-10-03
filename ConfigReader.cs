@@ -18,7 +18,6 @@ namespace GmailTest
         public string Capabilities;
     }
 
-
     [DataContract]
     public class ConfigReader
     {

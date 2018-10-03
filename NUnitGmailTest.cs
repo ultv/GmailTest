@@ -13,7 +13,7 @@ namespace GmailTest
 {
 
     [TestFixture]
-    //[Parallelizable(ParallelScope.Fixtures)]
+    [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
     public class NUnitGmailTest : Initialization
@@ -25,15 +25,13 @@ namespace GmailTest
         [Test(Description = "Открытие главной страницы. Chrome.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
-        [AllureIssue("GitHub#1", "https://github.com/ultv/GmailTest.git")]
-        [AllureTms("https://trello.com")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
-        [AllureFeature("Core")]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_001()
         {
             // Arrange
-            browser = init.Start(browser);
+            browser = init.Start(browser, 1);
             pageHome = new PageHome(browser);
             pageHome.Open(init.BaseUrl);
             string expected = "Gmail";
@@ -50,8 +48,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_002()
         {
             // Arrange                       
@@ -69,8 +66,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]      
         public void GmailTest_003()
         {                     
             // Act         
@@ -85,8 +81,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_004()
         {
             // Arrange                       
@@ -104,8 +99,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_005()
         {
             // Arrange
@@ -125,8 +119,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_006()
         {
             // Arrange            
@@ -134,10 +127,10 @@ namespace GmailTest
             pageInbox.WriteMessage(init);
 
             // Act            
-            bool actual = pageInbox.WaitHideElement(browser, pageInbox.GetElementToInput(), 15);
+            bool actual = pageInbox.WaitHideElement(browser, pageInbox.GetElementToInput(), 15);            
 
             // Assert
-            Assert.IsTrue(actual);
+            Assert.IsTrue(actual);            
         }
 
     }

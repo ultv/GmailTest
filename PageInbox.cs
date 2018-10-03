@@ -38,7 +38,7 @@ namespace GmailTest
         private By OptionsBar { get { return By.ClassName("a35"); } }
 
         /// <summary>
-        /// Письма в результатах поиска.
+        /// Письма с пометкой "входящие" в результатах поиска.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "av")]
         //private IWebElement ResultSearch { get; set; }        
@@ -131,10 +131,12 @@ namespace GmailTest
             // На firefox без Click() и Clear() не срабатывает!!!
             sendTo.Click();
             sendTo.Clear();
-            sendTo.SendKeys(mailTo);
+            sendTo.SendKeys(mailTo);            
+
+            SubjectInput.SendKeys(init.Subject);            
+            MessageArea.SendKeys(init.Message + CountMail);            
+            MessageArea.SendKeys(OpenQA.Selenium.Keys.Control + OpenQA.Selenium.Keys.Enter);
             
-            SubjectInput.SendKeys(init.Subject);
-            MessageArea.SendKeys($"{init.Message} {CountMail} {OpenQA.Selenium.Keys.Control} {OpenQA.Selenium.Keys.Enter}");            
         }
 
         /// <summary>

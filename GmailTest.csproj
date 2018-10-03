@@ -75,7 +75,6 @@
     <Compile Include="Initialization.cs" />
     <Compile Include="NUnitGmailTest.cs" />
     <Compile Include="NUnitGmailTest2.cs" />
-    <Compile Include="NUnitGmailTest3.cs" />
     <Compile Include="PageHome.cs" />
     <Compile Include="PageInbox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -69,9 +69,9 @@ namespace GmailTest
         {            
             WaitShowElement(browser, ProfileText, 15);
 
-            System.Threading.Thread.Sleep(1000);            
+            System.Threading.Thread.Sleep(500);            
             LoginInput.SendKeys(pass);
-            System.Threading.Thread.Sleep(1000);            
+            System.Threading.Thread.Sleep(500);            
             LoginInput.SendKeys(OpenQA.Selenium.Keys.Enter);
 
             return WelcomeText;

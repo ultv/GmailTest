@@ -13,7 +13,7 @@ namespace GmailTest
 {
 
     [TestFixture]
-    //[Parallelizable(ParallelScope.Fixtures)]
+    [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
     public class NUnitGmailTest2 : Initialization
@@ -27,13 +27,12 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]       
         public void GmailTest_001()
         {
             // Arrange
             //browser = init.Start2();
-            browser = init.Start(browser);
+            browser = init.Start(browser, 2);
             pageHome = new PageHome(browser);
             pageHome.Open(init.BaseUrl);
             string expected = "Gmail";
@@ -50,8 +49,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_002()
         {
             // Arrange                       
@@ -69,8 +67,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_003()
         {
             // Act         
@@ -85,8 +82,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]       
         public void GmailTest_004()
         {
             // Arrange                       
@@ -104,8 +100,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]     
         public void GmailTest_005()
         {
             // Arrange
@@ -125,8 +120,7 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
-        [AllureSubSuite("NoAssert")]
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_006()
         {
             // Arrange            
