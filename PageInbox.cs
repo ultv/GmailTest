@@ -78,6 +78,7 @@ namespace GmailTest
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "ams")]
         private IWebElement ReplyButton { get; set; }
+        public By ReplyButtonBy { get { return By.ClassName("ams"); } }
 
         /// <summary>
         /// Адрес отправителя.
@@ -93,6 +94,8 @@ namespace GmailTest
         private IWebElement DelReplyButton { get; set; }
 
         private By ErrorMessage { get { return By.ClassName("Kj-JD-Jz"); } }
+
+        public By NonSortedText { get { return By.ClassName("aKz"); } }
 
         /// <summary>
         /// Осуществляет поиск среди входящих писем.
@@ -182,6 +185,15 @@ namespace GmailTest
         public By GetElementToInput()
         {
             return ToInputBy;
-        }       
+        }
+
+        public bool IsVissibleReplyButton()
+        {
+            List<IWebElement> elements = browser.FindElements(ReplyButtonBy).ToList();
+
+            if (elements.Count > 0)
+                return true;
+            else return false;
+        }
     }
 }

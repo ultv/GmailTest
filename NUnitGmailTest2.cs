@@ -49,14 +49,15 @@ namespace GmailTest
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]        
+        [AllureSuite("PassedSuite")]
         public void GmailTest_002()
         {
             // Arrange                       
-            string expected = "Вход";
+            string expected = "Забыли пароль?";
+            init.pageHome.EnterLogin(init.Login);
 
             // Act
-            string actual = init.pageHome.EnterLogin(init.Login).Text;
+            string actual = init.pageHome.GetForgotPasswordText();
 
             // Assert
             Assert.AreEqual(actual, expected);
@@ -109,10 +110,10 @@ namespace GmailTest
             string expected = "Gmail";
 
             // Act            
-            string actual = browser.Title;
+            bool actual = init.pageInbox.WaitHideElement(browser, init.pageInbox.NonSortedText, 15);
 
             // Assert
-            Assert.AreNotEqual(actual, expected);
+            Assert.IsTrue(actual);
         }
 
         [Test(Description = "Подсчет и написание. Firefox.")]
@@ -132,7 +133,7 @@ namespace GmailTest
 
             // Assert
             Assert.IsTrue(actual);
-        }        
+        }
 
     }
 }

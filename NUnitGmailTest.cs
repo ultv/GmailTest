@@ -41,25 +41,27 @@ namespace GmailTest
 
             // Assert
             Assert.AreEqual(actual, expected);
-        }
+        }        
 
         [Test(Description = "Ввод логина. Chrome.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]        
+        [AllureSuite("PassedSuite")]
         public void GmailTest_002()
         {
             // Arrange                       
-            string expected = "Вход";
+            string expected = "Забыли пароль?";
+            init.pageHome.EnterLogin(init.Login);
 
             // Act
-            string actual = init.pageHome.EnterLogin(init.Login).Text;
+            string actual = init.pageHome.GetForgotPasswordText();
 
             // Assert
             Assert.AreEqual(actual, expected);
         }
+
 
         [Test(Description = "Вход в профиль. Chrome.")]
         [AllureTag("NUnit", "Regression")]
@@ -92,28 +94,28 @@ namespace GmailTest
 
             // Assert            
             StringAssert.Contains(actual, expected);
-        }
+        }       
 
         [Test(Description = "Поиск во входящих. Chrome.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]        
+        [AllureSuite("PassedSuite")]
         public void GmailTest_005()
         {
             // Arrange
             init.pageInbox = new PageInbox(browser);
-            init.pageInbox.Search(init.SearchKey + init.SearchText);            
+            init.pageInbox.Search(init.SearchKey + init.SearchText);
             string expected = "Gmail";
 
             // Act            
-            string actual = browser.Title;
+            bool actual = init.pageInbox.WaitHideElement(browser, init.pageInbox.NonSortedText, 15);
 
             // Assert
-            Assert.AreNotEqual(actual, expected);
+            Assert.IsTrue(actual);
         }
-
+        
         [Test(Description = "Подсчет и написание. Chrome.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
@@ -131,7 +133,7 @@ namespace GmailTest
 
             // Assert
             Assert.IsTrue(actual);            
-        }
-        
+        }        
+
     }
 }

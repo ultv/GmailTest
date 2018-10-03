@@ -38,6 +38,8 @@ namespace GmailTest
         [FindsBy(How = How.Id, Using = "profileIdentifier")]        
         private By ProfileText { get { return By.Id("profileIdentifier"); } }
 
+        private By ForgotPassText { get { return By.CssSelector("#forgotPassword > content > span"); } }
+
         /// <summary>
         /// Открывает главную страницу.
         /// </summary>
@@ -97,6 +99,11 @@ namespace GmailTest
             if (elements.Count > 0)
                 return true;
             else return false;
+        }
+
+        public string GetForgotPasswordText()
+        {
+            return WaitShowElement(browser, ForgotPassText, 15).Text;
         }
     }
 }
