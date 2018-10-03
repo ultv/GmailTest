@@ -3,7 +3,7 @@
 ## Технологии
 * [C#](https://docs.microsoft.com/ru-ru/dotnet/csharp/)
 * [NUnit](http://nunit.org/)
-* [Jankins](https://jenkins.io/)
+* [Jenkins](https://jenkins.io/)
 * [Selenium, SeleniumGrid](https://www.seleniumhq.org/)
 * [Allure](http://allure.qatools.ru/)
 
