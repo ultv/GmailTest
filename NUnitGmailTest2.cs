@@ -11,22 +11,22 @@ namespace GmailTest
     [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
-    public class NUnitGmailTest : Initialization
+    public class NUnitGmailTest2 : Initialization
     {
 
         //private Initialization init = new Initialization();
         private IWebDriver browser;
 
-        [Test(Description = "Открытие главной страницы. Chrome.")]
+        [Test(Description = "Открытие главной страницы. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]        
+        [AllureSuite("PassedSuite")]       
         public void GmailTest_001()
         {
-            // Arrange
-            browser = Start(browser);
+            // Arrange            
+            browser = Start(browser);            
             pageHome = new PageHome(browser);
             pageHome.Open(BaseUrl);
             string expected = "Gmail";
@@ -36,9 +36,9 @@ namespace GmailTest
 
             // Assert
             Assert.AreEqual(actual, expected);
-        }        
+        }
 
-        [Test(Description = "Ввод логина. Chrome.")]
+        [Test(Description = "Ввод логина. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -57,15 +57,14 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-
-        [Test(Description = "Вход в профиль. Chrome.")]
+        [Test(Description = "Вход в профиль. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]      
+        [AllureSuite("PassedSuite")]        
         public void GmailTest_003()
-        {                     
+        {
             // Act         
             bool actual = pageHome.IsVissibleProfileIdentifier();
 
@@ -73,30 +72,30 @@ namespace GmailTest
             Assert.IsTrue(actual);
         }
 
-        [Test(Description = "Ввод пароля. Chrome.")]
+        [Test(Description = "Ввод пароля. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]        
+        [AllureSuite("PassedSuite")]       
         public void GmailTest_004()
         {
             // Arrange                       
-            string expected = $"Добро пожаловать! {SearchText}";            
+            string expected = $"Добро пожаловать! {SearchText}";
 
             // Act
             string actual = pageHome.EnterPass(Pass).Text;
 
             // Assert            
             StringAssert.Contains(actual, expected);
-        }       
+        }
 
-        [Test(Description = "Поиск во входящих. Chrome.")]
+        [Test(Description = "Поиск во входящих. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]
+        [AllureSuite("PassedSuite")]     
         public void GmailTest_005()
         {
             // Arrange
@@ -108,8 +107,8 @@ namespace GmailTest
             // Assert
             Assert.IsTrue(actual);
         }
-        
-        [Test(Description = "Подсчет и написание. Chrome.")]
+
+        [Test(Description = "Подсчет и написание. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -124,8 +123,8 @@ namespace GmailTest
             bool actual = pageInbox.WriteMessage(Subject, Message);
 
             // Assert
-            Assert.IsTrue(actual);            
-        }        
+            Assert.IsTrue(actual);
+        }
 
     }
 }
