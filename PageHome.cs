@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using System.Windows.Forms;
 using OpenQA.Selenium.Support.UI;
 
 namespace GmailTest
 {
-    public class PageHome
+    public class PageHome : WaitAssistant
     {        
         public PageHome(IWebDriver browser)
         {
@@ -37,6 +34,8 @@ namespace GmailTest
         /// </summary>
         [FindsBy(How = How.Id, Using = "profileIdentifier")]        
         private By ProfileText { get { return By.Id("profileIdentifier"); } }
+
+        private By ForgotPassText { get { return By.CssSelector("#forgotPassword > content > span"); } }
 
         /// <summary>
         /// Открывает главную страницу.
@@ -78,18 +77,9 @@ namespace GmailTest
         }
 
         /// <summary>
-        /// Ожидание появления элемента.
+        /// Определяет видимость элемента "Идентификатор профиля".
         /// </summary>
-        /// <param name="browser"></param>
-        /// <param name="element"></param>
-        /// <param name="seconds"></param>
         /// <returns></returns>
-        public IWebElement WaitShowElement(IWebDriver browser, By element, int seconds)
-        {
-            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
-            return wait.Until(ExpectedConditions.ElementIsVisible(element));
-        }
-
         public bool IsVissibleProfileIdentifier()
         {
             List<IWebElement> elements = browser.FindElements(ProfileText).ToList();
@@ -98,5 +88,16 @@ namespace GmailTest
                 return true;
             else return false;
         }
+
+        /// <summary>
+        /// Возвращает текст элемента "Забыли пароль?".
+        /// </summary>
+        /// <returns></returns>
+        public string GetForgotPasswordText()
+        {
+            return WaitShowElement(browser, ForgotPassText, 15).Text;
+        }
     }
+
+    
 }
