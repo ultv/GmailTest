@@ -16,13 +16,13 @@ namespace GmailTest
     //[Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
-    public class NUnitGmailTest2 : Initialization
+    public class NUnitGmailTest3 : Initialization
     {
 
         private Initialization init = new Initialization();
         private IWebDriver browser;
 
-        [Test(Description = "Открытие главной страницы. Firefox.")]
+        [Test(Description = "Открытие главной страницы. Chrome.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -31,8 +31,7 @@ namespace GmailTest
         [AllureSubSuite("NoAssert")]
         public void GmailTest_001()
         {
-            // Arrange
-            //browser = init.Start2();
+            // Arrange            
             browser = init.Start(browser);
             pageHome = new PageHome(browser);
             pageHome.Open(init.BaseUrl);

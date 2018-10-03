@@ -26,6 +26,7 @@ namespace GmailTest
         public string SearchText { get { return conf.SearchText; } }
         public string Subject { get { return conf.Subject; } }
         public string Message { get { return conf.Message; } }
+        public static int CountBrowsers { get; set; }
 
         public IWebDriver Start1()
         {            
@@ -45,6 +46,25 @@ namespace GmailTest
             browser2.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
 
             return browser2;
+        }
+
+        public IWebDriver Start(IWebDriver browser)
+        {
+            if (CountBrowsers > conf.Node.Length)
+            {
+                Console.WriteLine("Зарегестрируйте новый Node узел и запишите параметры в config.json");
+                return null;
+            }
+            else
+            {
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                capabilities.SetCapability(CapabilityType.BrowserName, conf.Node[CountBrowsers].Capabilities);
+                browser = browser ?? new RemoteWebDriver(new Uri(conf.Node[CountBrowsers].Uri), capabilities);
+                browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+                CountBrowsers++;
+
+                return browser;
+            }            
         }
     }
 }

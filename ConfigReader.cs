@@ -48,7 +48,7 @@ namespace GmailTest
 
                 
                     DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(ConfigReader));
-                    ConfigReader data = (ConfigReader)jsonFormatter.ReadObject(fs);
+                    ConfigReader data = (ConfigReader)jsonFormatter.ReadObject(fs);                    
 
                     Login = data.Login;
                     Pass = data.Pass;

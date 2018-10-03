@@ -13,7 +13,7 @@ namespace GmailTest
 {
 
     [TestFixture]
-    [Parallelizable(ParallelScope.Fixtures)]
+    //[Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
     public class NUnitGmailTest : Initialization
@@ -33,7 +33,7 @@ namespace GmailTest
         public void GmailTest_001()
         {
             // Arrange
-            browser = init.Start1();
+            browser = init.Start(browser);
             pageHome = new PageHome(browser);
             pageHome.Open(init.BaseUrl);
             string expected = "Gmail";
