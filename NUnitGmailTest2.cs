@@ -32,9 +32,9 @@ namespace GmailTest
         {
             // Arrange
             //browser = init.Start2();
-            browser = init.Start(browser, 2);
-            pageHome = new PageHome(browser);
-            pageHome.Open(init.BaseUrl);
+            browser = init.Start(browser, 2);            
+            init.pageHome = new PageHome(browser);
+            init.pageHome.Open(init.BaseUrl);
             string expected = "Gmail";
 
             // Act
@@ -56,7 +56,7 @@ namespace GmailTest
             string expected = "Вход";
 
             // Act
-            string actual = pageHome.EnterLogin(init.Login).Text;
+            string actual = init.pageHome.EnterLogin(init.Login).Text;
 
             // Assert
             Assert.AreEqual(actual, expected);
@@ -71,7 +71,7 @@ namespace GmailTest
         public void GmailTest_003()
         {
             // Act         
-            bool actual = pageHome.IsVissibleProfileIdentifier();
+            bool actual = init.pageHome.IsVissibleProfileIdentifier();
 
             // Assert
             Assert.IsTrue(actual);
@@ -89,7 +89,7 @@ namespace GmailTest
             string expected = $"Добро пожаловать! {init.SearchText}";
 
             // Act
-            string actual = pageHome.EnterPass(init.Pass).Text;
+            string actual = init.pageHome.EnterPass(init.Pass).Text;
 
             // Assert            
             StringAssert.Contains(actual, expected);
@@ -104,8 +104,8 @@ namespace GmailTest
         public void GmailTest_005()
         {
             // Arrange
-            pageInbox = new PageInbox(browser);
-            pageInbox.Search(init.SearchKey + init.SearchText);
+            init.pageInbox = new PageInbox(browser);
+            init.pageInbox.Search(init.SearchKey + init.SearchText);
             string expected = "Gmail";
 
             // Act            
@@ -115,7 +115,7 @@ namespace GmailTest
             Assert.AreNotEqual(actual, expected);
         }
 
-        [Test(Description = "Подсчет и отправка. Firefox.")]
+        [Test(Description = "Подсчет и написание. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -124,15 +124,15 @@ namespace GmailTest
         public void GmailTest_006()
         {
             // Arrange            
-            int count = pageInbox.ResultCount();
-            pageInbox.WriteMessage(init);
+            int count = init.pageInbox.ResultCount();
+            init.pageInbox.WriteMessage(init);
 
             // Act            
-            bool actual = pageInbox.WaitHideElement(browser, pageInbox.GetElementToInput(), 15);
+            bool actual = init.pageInbox.WaitHideElement(browser, init.pageInbox.GetElementToInput(), 15);
 
             // Assert
             Assert.IsTrue(actual);
-        }
+        }        
 
     }
 }

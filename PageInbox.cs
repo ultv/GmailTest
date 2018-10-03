@@ -92,6 +92,8 @@ namespace GmailTest
         [FindsBy(How = How.ClassName, Using = "og")]
         private IWebElement DelReplyButton { get; set; }
 
+        private By ErrorMessage { get { return By.ClassName("Kj-JD-Jz"); } }
+
         /// <summary>
         /// Осуществляет поиск среди входящих писем.
         /// </summary>
@@ -101,7 +103,7 @@ namespace GmailTest
             WaitShowElement(browser, OptionsBar, 15);            
             SearchInput.Clear();
             SearchInput.SendKeys(text + OpenQA.Selenium.Keys.Enter);
-        }       
+        }                
 
         /// <summary>
         /// Проверяет результаты поиска.
@@ -123,14 +125,15 @@ namespace GmailTest
         /// </summary>
         public void WriteMessage(Initialization init)
         {          
-            string mailTo = GetMailTo();                                   
+            string mailTo = GetMailTo();
+            
             DelReplyButton.Click();
             WriteButton.Click();
             IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);
 
             // На firefox без Click() и Clear() не срабатывает!!!
-            sendTo.Click();
             sendTo.Clear();
+            sendTo.Click();            
             sendTo.SendKeys(mailTo);            
 
             SubjectInput.SendKeys(init.Subject);            
@@ -179,6 +182,6 @@ namespace GmailTest
         public By GetElementToInput()
         {
             return ToInputBy;
-        }
+        }       
     }
 }
