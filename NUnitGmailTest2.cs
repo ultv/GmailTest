@@ -115,7 +115,7 @@ namespace GmailTest
         public void GmailTest_006()
         {
             // Arrange            
-            int count = pageInbox.ResultCount();            
+            pageInbox.ResultCount();            
 
             // Act            
             bool actual = pageInbox.WriteMessage(Subject, Message);

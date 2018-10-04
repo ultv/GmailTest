@@ -101,6 +101,18 @@ namespace GmailTest
         private By ErrorMessage { get { return By.ClassName("Kj-JD-Jz"); } }
 
         /// <summary>
+        /// Кнопка "Ок" сообщения "Укажите как минимум одного получателя."
+        /// </summary>
+        [FindsBy(How = How.Name, Using = "ok")]
+        private IWebElement OkButton { get; set; }
+
+        /// <summary>
+        /// Иконка закрытия окна сообщения.
+        /// </summary>
+        [FindsBy(How = How.ClassName, Using = "Ha")]
+        private IWebElement CloseIcon { get; set; }
+
+        /// <summary>
         /// Осуществляет поиск среди входящих писем.
         /// </summary>
         /// <param name="text">Принимает фразу для поиска.</param>
@@ -108,7 +120,7 @@ namespace GmailTest
         {           
             WaitShowElement(browser, OptionsBar, 15);            
             SearchInput.Clear();
-            SearchInput.SendKeys(text + OpenQA.Selenium.Keys.Enter);
+            SearchInput.SendKeys(text + Keys.Enter);
 
             return WaitHideElement(browser, NonSortedText, 15);
         }                
@@ -134,26 +146,27 @@ namespace GmailTest
         /// </summary>
         public bool WriteMessage(string subject, string message)
         {          
-            string mailTo = GetMailTo();
-            
+            string mailTo = GetMailTo();            
             DelReplyButton.Click();
+
             WriteButton.Click();
-            IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);
-
-            // На firefox без Click() и Clear() не срабатывает!!!            
-            sendTo.Click();
-            sendTo.Clear();
+            IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);            
             sendTo.SendKeys(mailTo);            
+           
+            SubjectInput.SendKeys(subject);
+            MessageArea.SendKeys(message + CountMail);
+            MessageArea.SendKeys(Keys.Control + Keys.Enter);            
 
-            SubjectInput.SendKeys(subject);            
-            MessageArea.SendKeys(message + CountMail);            
-            MessageArea.SendKeys(OpenQA.Selenium.Keys.Control + OpenQA.Selenium.Keys.Enter);
+            if (WaitHideElement(browser, ToInputBy, 15))
+            {
+                if (!WaitShowElementEx(browser, ErrorMessage, 5))
+                    return true;
+            }
 
-            if (WaitHideElement(browser, ToInputBy, 15) && !WaitShowElementEx(browser, ErrorMessage, 5))
-                return true;
-            else return false;
+            return false;                        
         }
 
+        
         /// <summary>
         /// Получает адрес отпраителя письма.
         /// </summary>
