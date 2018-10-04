@@ -7,14 +7,14 @@ using NUnit.Allure.Attributes;
 namespace GmailTest
 {
 
+  
     [TestFixture]
     [Parallelizable(ParallelScope.Fixtures)]
     [AllureNUnit]
     [AllureDisplayIgnored]
     public class NUnitGmailTest : Initialization
     {
-
-        //private Initialization init = new Initialization();
+       
         private IWebDriver browser;
 
         [Test(Description = "Открытие главной страницы. Chrome.")]
@@ -27,12 +27,11 @@ namespace GmailTest
         {
             // Arrange
             browser = Start(browser);
-            pageHome = new PageHome(browser);
-            pageHome.Open(BaseUrl);
+            pageHome = new PageHome(browser);            
             string expected = "Gmail";
 
             // Act
-            string actual = browser.Title;
+            string actual = pageHome.Open(BaseUrl);
 
             // Assert
             Assert.AreEqual(actual, expected);
