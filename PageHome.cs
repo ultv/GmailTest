@@ -53,14 +53,10 @@ namespace GmailTest
         {
             browser.Navigate().GoToUrl(url);
 
-            do
-            {
-                if (browser.Title == "mail.google.com")
-                {
-                    ReloadButton.Click();
-                }
-
-            } while (!WaitShowElementEx(browser, WelcomeTextBy, 1));
+            while (!WaitShowElementEx(browser, WelcomeTextBy, 1)) 
+            {                
+                ReloadButton.Click();             
+            }
 
             return browser.Title;
         }
@@ -73,7 +69,7 @@ namespace GmailTest
         public IWebElement EnterLogin(string login)
         {
             LoginInput.Clear();
-            LoginInput.SendKeys(login + OpenQA.Selenium.Keys.Enter);            
+            LoginInput.SendKeys(login + Keys.Enter);            
 
             return WelcomeText;
         }
@@ -90,7 +86,7 @@ namespace GmailTest
             System.Threading.Thread.Sleep(500);            
             LoginInput.SendKeys(pass);
             System.Threading.Thread.Sleep(500);            
-            LoginInput.SendKeys(OpenQA.Selenium.Keys.Enter);
+            LoginInput.SendKeys(Keys.Enter);
 
             return WelcomeText;
         }
