@@ -144,22 +144,26 @@ namespace GmailTest
         /// Заполняет и отправляет сообщение.
         /// Возвращает true если закрылось окно сообщения и не появилось окно с ошибкой.
         /// </summary>
-        public bool WriteMessage(string subject, string message)
+        public bool WriteMessage(string subject, string message, string capabilities)
         {          
             string mailTo = GetMailTo();            
             DelReplyButton.Click();
 
             WriteButton.Click();
-            IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);            
-            sendTo.SendKeys(mailTo);            
-           
-            SubjectInput.SendKeys(subject);
+            IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);
+            
+            if(capabilities == "firefox")            
+                ScriptKeys(mailTo);
+            else
+                sendTo.SendKeys(mailTo);
+
+                SubjectInput.SendKeys(subject);
             MessageArea.SendKeys(message + CountMail);
             MessageArea.SendKeys(Keys.Control + Keys.Enter);            
 
             if (WaitHideElement(browser, ToInputBy, 15))
             {
-                if (!WaitShowElementEx(browser, ErrorMessage, 5))
+                if (!WaitShowElementEx(browser, ErrorMessage, 3))
                     return true;
             }
 
@@ -177,6 +181,16 @@ namespace GmailTest
             IWebElement mailTo = WaitShowElement(browser, MailToTextBy, 15);
 
             return mailTo.Text;
+        }
+
+        /// <summary>
+        /// Записывает адрес в элемент textarea.
+        /// </summary>
+        /// <param name="mail"></param>
+        public void ScriptKeys(string mail)
+        {            
+            IJavaScriptExecutor js = (IJavaScriptExecutor)browser;            
+            js.ExecuteScript("document.getElementsByName('to')[0].textContent = '" + mail + "'");
         }
 
         
