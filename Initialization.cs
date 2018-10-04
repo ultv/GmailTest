@@ -46,6 +46,7 @@ namespace GmailTest
         public string Subject { get { return conf.Subject; } }
         public string Message { get { return conf.Message; } }
         public static MultiThreadingCounter CountBrowsers;
+        public int CountBrowsersReally { get; set; }
         
         public Initialization()
         {
@@ -55,13 +56,13 @@ namespace GmailTest
 
         public IWebDriver Start(IWebDriver browser)
         {
-            int count = CountBrowsers.Next();            
+            CountBrowsersReally = CountBrowsers.Next();            
 
-            if ( count < conf.Node.Length)
+            if ( CountBrowsersReally < conf.Node.Length)
             {
                 DesiredCapabilities capabilities = new DesiredCapabilities();            
-                capabilities.SetCapability(CapabilityType.BrowserName, conf.Node[count].Capabilities);
-                browser = browser ?? new RemoteWebDriver(new Uri(conf.Node[count].Uri), capabilities);
+                capabilities.SetCapability(CapabilityType.BrowserName, conf.Node[CountBrowsersReally].Capabilities);
+                browser = browser ?? new RemoteWebDriver(new Uri(conf.Node[CountBrowsersReally].Uri), capabilities);
                 browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
                                                
                 return browser;
@@ -71,6 +72,11 @@ namespace GmailTest
                 Console.WriteLine("Запустите новый SeleniumGrid Node узел и запишите параметры в config.json");
                 return null;
             }            
+        }
+
+        public string GetCapabilities()
+        {
+            return conf.Node[CountBrowsersReally].Capabilities;
         }
     }
 }
