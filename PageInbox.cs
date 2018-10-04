@@ -96,6 +96,11 @@ namespace GmailTest
         private By NonSortedText { get { return By.ClassName("aKz"); } }
 
         /// <summary>
+        /// Сообщение "Укажите как минимум одного получателя."
+        /// </summary>
+        private By ErrorMessage { get { return By.ClassName("Kj-JD-Jz"); } }
+
+        /// <summary>
         /// Осуществляет поиск среди входящих писем.
         /// </summary>
         /// <param name="text">Принимает фразу для поиска.</param>
@@ -125,6 +130,7 @@ namespace GmailTest
 
         /// <summary>
         /// Заполняет и отправляет сообщение.
+        /// Возвращает true если закрылось окно сообщения и не появилось окно с ошибкой.
         /// </summary>
         public bool WriteMessage(string subject, string message)
         {          
@@ -143,7 +149,9 @@ namespace GmailTest
             MessageArea.SendKeys(message + CountMail);            
             MessageArea.SendKeys(OpenQA.Selenium.Keys.Control + OpenQA.Selenium.Keys.Enter);
 
-            return WaitHideElement(browser, ToInputBy, 15);
+            if (WaitHideElement(browser, ToInputBy, 15) && !WaitShowElementEx(browser, ErrorMessage, 5))
+                return true;
+            else return false;
         }
 
         /// <summary>
