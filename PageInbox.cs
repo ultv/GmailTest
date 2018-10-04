@@ -152,10 +152,10 @@ namespace GmailTest
             WriteButton.Click();
             IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);
             
-            if(capabilities == "firefox")            
-                ScriptKeys(mailTo);
-            else
-                sendTo.SendKeys(mailTo);
+            //if(capabilities == "firefox")            
+                ScriptKeys(mailTo, subject, message);
+            //else
+            //    sendTo.SendKeys(mailTo);
 
                 SubjectInput.SendKeys(subject);
             MessageArea.SendKeys(message + CountMail);
@@ -187,10 +187,15 @@ namespace GmailTest
         /// Записывает адрес в элемент textarea.
         /// </summary>
         /// <param name="mail"></param>
-        public void ScriptKeys(string mail)
+        public void ScriptKeys(string mail, string sub, string mess)
         {            
-            IJavaScriptExecutor js = (IJavaScriptExecutor)browser;            
+            IJavaScriptExecutor js = (IJavaScriptExecutor)browser;
+
             js.ExecuteScript("document.getElementsByName('to')[0].textContent = '" + mail + "'");
+
+            js.ExecuteScript("document.getElementsByName('subjectbox')[0].value = '" + sub + "'");
+
+            js.ExecuteScript("document.getElementById(':fz').value = '" + mess + "'");
         }
 
         
