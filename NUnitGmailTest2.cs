@@ -118,7 +118,7 @@ namespace GmailTest
             pageInbox.ResultCount();            
 
             // Act            
-            bool actual = pageInbox.WriteMessage(Subject, Message);
+            bool actual = pageInbox.WriteMessage(Subject, Message, GetCapabilities());
 
             // Assert
             Assert.IsTrue(actual);
