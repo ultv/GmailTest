@@ -28,6 +28,7 @@ namespace GmailTest
         /// </summary>
         [FindsBy(How = How.Id, Using = "headingText")]
         private IWebElement WelcomeText { get; set; }
+        private By WelcomeTextBy { get { return By.Id("headingText"); } }
 
         /// <summary>
         /// Индикатор профиля. Появляется после ввода имени пользователя.
@@ -45,20 +46,25 @@ namespace GmailTest
 
         /// <summary>
         /// Открывает главную страницу.
+        /// автоматически перегружает, если нет приглашения для входа.
         /// </summary>
         /// <param name="url">Принимает адрес сайта.</param>
         public string Open(string url)
         {
             browser.Navigate().GoToUrl(url);
 
-            if(browser.Title == "mail.google.com")
+            do
             {
-                ReloadButton.Click();
-            }
+                if (browser.Title == "mail.google.com")
+                {
+                    ReloadButton.Click();
+                }
+
+            } while (!WaitShowElementEx(browser, WelcomeTextBy, 1));
 
             return browser.Title;
         }
-
+        
         /// <summary>
         /// Вводит имя пользователя.
         /// </summary>
