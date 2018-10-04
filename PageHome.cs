@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support.UI;
 namespace GmailTest
 {
     public class PageHome : WaitAssistant
-    {        
+    {
         public PageHome(IWebDriver browser)
         {
             this.browser = browser;
@@ -32,18 +32,31 @@ namespace GmailTest
         /// <summary>
         /// Индикатор профиля. Появляется после ввода имени пользователя.
         /// </summary>
-        [FindsBy(How = How.Id, Using = "profileIdentifier")]        
+        [FindsBy(How = How.Id, Using = "profileIdentifier")]
         private By ProfileText { get { return By.Id("profileIdentifier"); } }
 
         private By ForgotPassText { get { return By.CssSelector("#forgotPassword > content > span"); } }
 
         /// <summary>
+        /// Кнопка "Перезагрузить"
+        /// </summary>
+        [FindsBy(How = How.Id, Using = "reload-button")]
+        private IWebElement ReloadButton { get; set; }
+
+        /// <summary>
         /// Открывает главную страницу.
         /// </summary>
         /// <param name="url">Принимает адрес сайта.</param>
-        public void Open(string url)
+        public string Open(string url)
         {
             browser.Navigate().GoToUrl(url);
+
+            if(browser.Title == "mail.google.com")
+            {
+                ReloadButton.Click();
+            }
+
+            return browser.Title;
         }
 
         /// <summary>
