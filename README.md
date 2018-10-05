@@ -9,7 +9,7 @@
 
 ## Инструкция
 
-* Для стабильной работы браузера Firefox - требуется geckodriver.exe весии не ниже [v0.23.0](https://github.com/mozilla/geckodriver/releases)
+* Для стабильной работы браузера Firefox - требуется geckodriver.exe весии не ниже [v0.22.0](https://github.com/mozilla/geckodriver/releases)
 
 * Необходимо настроить среду разработки и расположить файл config.json в директории bin/Debug/
 ```
