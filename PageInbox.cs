@@ -153,12 +153,12 @@ namespace GmailTest
             IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);
             
             //if(capabilities == "firefox")            
-            //    ScriptKeys(mailTo, subject, message);
+                ScriptKeys(mailTo, subject, message + CountMail);
             //else
             //{            
-                sendTo.SendKeys(mailTo);
-                SubjectInput.SendKeys(subject);
-                MessageArea.SendKeys(message + CountMail);
+            //    sendTo.SendKeys(mailTo);
+            //    SubjectInput.SendKeys(subject);
+            //    MessageArea.SendKeys(message + CountMail);
                 MessageArea.SendKeys(Keys.Control + Keys.Enter);            
            //}
 
