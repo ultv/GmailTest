@@ -20,13 +20,13 @@ namespace GmailTest
         /// <summary>
         /// Количество найденных писем.
         /// </summary>
-        private int CountMail { get; set; }
+        private int CountMail;
 
         /// <summary>
         /// Поле ввод фразы для поиска.
         /// </summary>
-        [FindsBy(How = How.ClassName, Using = "gb_bf")]        
-        private IWebElement SearchInput { get; set; }
+        [FindsBy(How = How.ClassName, Using = "gb_bf")]
+        private IWebElement SearchInput;
 
         /// <summary>
         /// Панель опций.
@@ -37,35 +37,34 @@ namespace GmailTest
         /// <summary>
         /// Письма с пометкой "входящие" в результатах поиска.
         /// </summary>
-        [FindsBy(How = How.ClassName, Using = "av")]
-        //private IWebElement ResultSearch { get; set; }        
+        [FindsBy(How = How.ClassName, Using = "av")]        
         private By ResultSearch { get { return By.ClassName("av"); } }
 
         /// <summary>
         /// Кнопка "Написать".
         /// </summary>        
         [FindsBy(How = How.CssSelector, Using = ".T-I-KE")]
-        private IWebElement WriteButton { get; set; }
+        private IWebElement WriteButton;
         private By WriteButtonBy { get { return By.CssSelector(".T-I-KE"); } }
 
         /// <summary>
         /// Поле ввода адреса получателя.        
         /// </summary>
-        [FindsBy(How = How.Name, Using = "to")]        
-        private IWebElement ToInput { get; set; }
+        [FindsBy(How = How.Name, Using = "to")]
+        private IWebElement ToInput;
         private By ToInputBy { get { return By.Name("to"); } }
 
         /// <summary>
         /// Поле ввода темы письма.
         /// </summary>
         [FindsBy(How = How.Name, Using = "subjectbox")]
-        private IWebElement SubjectInput { get; set; }
+        private IWebElement SubjectInput;
 
         /// <summary>
         /// Поле ввода сообщения.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "Am")]
-        private IWebElement MessageArea { get; set; }
+        private IWebElement MessageArea;
 
         [FindsBy(How = How.CssSelector, Using = "img.gb_Wa")]
         private By LogoImage { get { return By.ClassName("img.gb_Wa"); } }
@@ -74,21 +73,21 @@ namespace GmailTest
         /// Кнопка ответить.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "ams")]
-        private IWebElement ReplyButton { get; set; }
+        private IWebElement ReplyButton;
         private By ReplyButtonBy { get { return By.ClassName("ams"); } }
 
         /// <summary>
         /// Адрес отправителя.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "oL")]
-        private IWebElement MailToText { get; set; }
+        private IWebElement MailToText;
         private By MailToTextBy { get { return By.ClassName("oL"); } }
 
         /// <summary>
         /// Кнопка удалить черновик.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "og")]
-        private IWebElement DelReplyButton { get; set; }       
+        private IWebElement DelReplyButton;
 
         /// <summary>
         /// Заголовок "Несортированные письма"
@@ -104,13 +103,13 @@ namespace GmailTest
         /// Кнопка "Ок" сообщения "Укажите как минимум одного получателя."
         /// </summary>
         [FindsBy(How = How.Name, Using = "ok")]
-        private IWebElement OkButton { get; set; }
+        private IWebElement OkButton;
 
         /// <summary>
         /// Иконка закрытия окна сообщения.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "Ha")]
-        private IWebElement CloseIcon { get; set; }
+        private IWebElement CloseIcon;
 
         /// <summary>
         /// Осуществляет поиск среди входящих писем.
@@ -152,15 +151,16 @@ namespace GmailTest
             WriteButton.Click();
             IWebElement sendTo = WaitShowElement(browser, ToInputBy, 15);
             
-            //if(capabilities == "firefox")            
+            if(capabilities == "firefox")            
                 ScriptKeys(mailTo, subject, message + CountMail);
-            //else
-            //{            
-            //    sendTo.SendKeys(mailTo);
-            //    SubjectInput.SendKeys(subject);
-            //    MessageArea.SendKeys(message + CountMail);
-                MessageArea.SendKeys(Keys.Control + Keys.Enter);            
-           //}
+            else
+            {            
+                sendTo.SendKeys(mailTo);
+                SubjectInput.SendKeys(subject);
+                MessageArea.SendKeys(message + CountMail);            
+            }
+
+            MessageArea.SendKeys(Keys.Control + Keys.Enter);
 
             if (WaitHideElement(browser, ToInputBy, 15))
             {
@@ -191,11 +191,8 @@ namespace GmailTest
         public void ScriptKeys(string mail, string sub, string mess)
         {            
             IJavaScriptExecutor js = (IJavaScriptExecutor)browser;
-
             js.ExecuteScript("document.getElementsByName('to')[0].textContent = '" + mail + "'");
-
             js.ExecuteScript("document.getElementsByName('subjectbox')[0].value = '" + sub + "'");
-
             js.ExecuteScript("document.getElementById(':fz').value = '" + mess + "'");
         }
 

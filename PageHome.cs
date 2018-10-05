@@ -21,13 +21,13 @@ namespace GmailTest
         /// Поле для ввода имени пользователя.
         /// </summary>
         [FindsBy(How = How.ClassName, Using = "whsOnd")]
-        private IWebElement LoginInput { get; set; }
+        private IWebElement LoginInput;
 
         /// <summary>
         /// Приветствие. Появляется после ввода имени пользователя.
         /// </summary>
         [FindsBy(How = How.Id, Using = "headingText")]
-        private IWebElement WelcomeText { get; set; }
+        private IWebElement WelcomeText;
         private By WelcomeTextBy { get { return By.Id("headingText"); } }
 
         /// <summary>
@@ -36,13 +36,16 @@ namespace GmailTest
         [FindsBy(How = How.Id, Using = "profileIdentifier")]
         private By ProfileText { get { return By.Id("profileIdentifier"); } }
 
+        /// <summary>
+        /// Фраза "Забыли пароль?"
+        /// </summary>
         private By ForgotPassText { get { return By.CssSelector("#forgotPassword > content > span"); } }
 
         /// <summary>
         /// Кнопка "Перезагрузить"
         /// </summary>
         [FindsBy(How = How.Id, Using = "reload-button")]
-        private IWebElement ReloadButton { get; set; }
+        private IWebElement ReloadButton;
 
         /// <summary>
         /// Открывает главную страницу.
