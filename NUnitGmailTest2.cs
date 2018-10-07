@@ -36,7 +36,10 @@ namespace GmailTest
             Assert.AreEqual(actual, expected);
         }
 
-        [Test(Description = "Ввод логина. Firefox.")]
+        /*
+         * При частом использовании требует ввод капчи.
+         * 
+        [Test(Description = "Ввод логина. Негативный сценарий. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -44,25 +47,28 @@ namespace GmailTest
         [AllureSuite("PassedSuite")]
         public void GmailTest_002()
         {
-            // Arrange                       
-            string expected = "Забыли пароль?";
-            pageHome.EnterLogin(Login);
+            // Arrange                                
+            string expected = "Введите адрес электронной почты или номер телефона";
+            pageHome.EnterLogin("Неверный логин");
 
             // Act
-            string actual = pageHome.GetForgotPasswordText();
+            string actual = pageHome.GetErrorLoginPassMessage();
 
             // Assert
             Assert.AreEqual(actual, expected);
         }
+        */
 
-        [Test(Description = "Вход в профиль. Firefox.")]
+        [Test(Description = "Ввод логина. Вход в профиль. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]        
+        [AllureSuite("PassedSuite")]
         public void GmailTest_003()
         {
+            pageHome.EnterLogin(Login);
+
             // Act         
             bool actual = pageHome.IsVissibleProfileIdentifier();
 
@@ -70,7 +76,10 @@ namespace GmailTest
             Assert.IsTrue(actual);
         }
 
-        [Test(Description = "Ввод пароля. Chrome.")]
+        /*
+         * При частом использовании требует ввод капчи.
+         * 
+        [Test(Description = "Ввод пароля. Негативный сценарий. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
@@ -79,10 +88,30 @@ namespace GmailTest
         public void GmailTest_004()
         {
             // Arrange                       
+            pageHome.EnterPass("Неверный пароль");
+            string expected = "Неверный пароль. Повторите попытку или нажмите на ссылку \"Забыли пароль?\", чтобы сбросить его.";
+
+            // Act
+            string actual = pageHome.GetErrorLoginPassMessage();
+
+            // Assert            
+            Assert.AreEqual(actual, expected);
+        }
+        */
+
+        [Test(Description = "Ввод пароля. Firefox.")]
+        [AllureTag("NUnit", "Regression")]
+        [AllureOwner("Седов А")]
+        [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureSuite("PassedSuite")]
+        public void GmailTest_005()
+        {
+            // Arrange                       
             pageHome.EnterPass(Pass);
 
             // Act
-            bool actual = pageHome.IsVissibleLoadingInfo();
+            bool actual = pageHome.IsExistLoadingInfo();
 
             // Assert            
             Assert.IsTrue(actual);
@@ -94,7 +123,7 @@ namespace GmailTest
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]     
-        public void GmailTest_005()
+        public void GmailTest_006()
         {
             // Arrange
             pageInbox = new PageInbox(browser);            
@@ -106,13 +135,13 @@ namespace GmailTest
             Assert.IsTrue(actual);
         }
 
-        [Test(Description = "Подсчет и написание. Firefox.")]
+        [Test(Description = "Отправка сообщения. Firefox.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
         [AllureSuite("PassedSuite")]        
-        public void GmailTest_006()
+        public void GmailTest_007()
         {
             // Arrange            
             pageInbox.ResultCount();            
