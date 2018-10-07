@@ -183,8 +183,7 @@ namespace GmailTest
             js.ExecuteScript("document.getElementsByName('subjectbox')[0].value = '" + sub + "'");
             js.ExecuteScript("document.getElementsByName('to')[0].textContent = '" + mail + "'");
 
-            MessageArea.Click();
-            MessageArea.Clear();
+            MessageArea.Click();            
             js.ExecuteScript("document.getElementById(':fy').textContent = '" + mess + "'");
         }
 
