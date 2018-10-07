@@ -70,22 +70,22 @@ namespace GmailTest
             Assert.IsTrue(actual);
         }
 
-        [Test(Description = "Ввод пароля. Firefox.")]
+        [Test(Description = "Ввод пароля. Chrome.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]       
+        [AllureSuite("PassedSuite")]
         public void GmailTest_004()
         {
             // Arrange                       
-            string expected = $"Добро пожаловать! {SearchText}";
+            pageHome.EnterPass(Pass);
 
             // Act
-            string actual = pageHome.EnterPass(Pass).Text;
+            bool actual = pageHome.IsVissibleLoadingInfo();
 
             // Assert            
-            StringAssert.Contains(actual, expected);
+            Assert.IsTrue(actual);
         }
 
         [Test(Description = "Поиск во входящих. Firefox.")]
@@ -124,5 +124,11 @@ namespace GmailTest
             Assert.IsTrue(actual);
         }
 
+        [OneTimeTearDown]
+        public void RunAfterAllTests()
+        {
+            pageInbox.LogOut();
+            browser.Quit();
+        }
     }
 }

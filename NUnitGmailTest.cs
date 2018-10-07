@@ -70,25 +70,25 @@ namespace GmailTest
 
             // Assert
             Assert.IsTrue(actual);
-        }
+        }        
 
         [Test(Description = "Ввод пароля. Chrome.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]        
+        [AllureSuite("PassedSuite")]
         public void GmailTest_004()
         {
             // Arrange                       
-            string expected = $"Добро пожаловать! {SearchText}";            
+            pageHome.EnterPass(Pass);
 
             // Act
-            string actual = pageHome.EnterPass(Pass).Text;
+            bool actual = pageHome.IsVissibleLoadingInfo();
 
             // Assert            
-            StringAssert.Contains(actual, expected);
-        }       
+            Assert.IsTrue(actual);
+        }
 
         [Test(Description = "Поиск во входящих. Chrome.")]
         [AllureTag("NUnit", "Regression")]
@@ -106,25 +106,31 @@ namespace GmailTest
 
             // Assert
             Assert.IsTrue(actual);
-        }
-        
+        }                
+
         [Test(Description = "Подсчет и написание. Chrome.")]
         [AllureTag("NUnit", "Regression")]
         [AllureOwner("Седов А")]
         [AllureIssue("ISSUE-1")]
         [AllureTms("TMS-12")]
-        [AllureSuite("PassedSuite")]        
+        [AllureSuite("PassedSuite")]
         public void GmailTest_006()
         {
             // Arrange            
-            pageInbox.ResultCount();            
+            pageInbox.ResultCount();
 
             // Act            
             bool actual = pageInbox.WriteMessage(Subject, Message, GetCapabilities());
 
             // Assert
-            Assert.IsTrue(actual);            
-        }        
+            Assert.IsTrue(actual);
+        }
 
+        [OneTimeTearDown]
+        public void RunAfterAllTests()
+        {
+            pageInbox.LogOut();
+            browser.Quit();
+        }
     }
 }
