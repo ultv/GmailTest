@@ -28,12 +28,38 @@ namespace GmailTest
         /// <param name="element"></param>
         /// <param name="seconds"></param>
         /// <returns></returns>
-        public bool WaitShowElementEx(IWebDriver browser, By element, int seconds)
+        public bool WaitReturnException(IWebDriver browser, By element, int seconds)
         {
             try
             {
                 WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
                 wait.Until(ExpectedConditions.ElementIsVisible(element));
+
+                return false;
+            }
+            catch (NoSuchElementException)
+            {
+                return true;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// определяет существование элемента.
+        /// </summary>
+        /// <param name="browser"></param>
+        /// <param name="element"></param>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
+        public bool WaitElementExist(IWebDriver browser, By element, int seconds)
+        {
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(seconds));
+                wait.Until(ExpectedConditions.ElementExists(element));
 
                 return true;
             }
@@ -45,7 +71,7 @@ namespace GmailTest
             {
                 return false;
             }
-        }    
+        }
 
         /// <summary>
         /// Ожидание сокрытия элемента.
