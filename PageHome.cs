@@ -34,20 +34,24 @@ namespace GmailTest
         /// Индикатор профиля. Появляется после ввода имени пользователя.
         /// </summary>
         [FindsBy(How = How.Id, Using = "profileIdentifier")]
-        private By ProfileText { get { return By.Id("profileIdentifier"); } }
-
-        /// <summary>
-        /// Фраза "Забыли пароль?"
-        /// </summary>
-        private By ForgotPassText { get { return By.CssSelector("#forgotPassword > content > span"); } }
-
-        private By LoadingInfo { get { return By.Id("loading"); } }
+        private By ProfileText { get { return By.Id("profileIdentifier"); } }              
 
         /// <summary>
         /// Кнопка "Перезагрузить"
         /// </summary>
         [FindsBy(How = How.Id, Using = "reload-button")]
         private IWebElement ReloadButton;
+
+        /// <summary>
+        /// Индикатор загрузки.
+        /// </summary>
+        private By LoadingInfo { get { return By.ClassName("msgb"); } }
+
+        /// <summary>
+        /// Сообщение об ошибочных логине и пароле.
+        /// </summary>
+        private By ErrorLoginPassMassage { get { return By.ClassName("dEOOab"); } }
+
 
         /// <summary>
         /// Открывает главную страницу.
@@ -58,7 +62,7 @@ namespace GmailTest
         {
             browser.Navigate().GoToUrl(url);
 
-            while (!WaitShowElementEx(browser, WelcomeTextBy, 1)) 
+            while (WaitReturnException(browser, WelcomeTextBy, 2)) 
             {                
                 ReloadButton.Click();             
             }
@@ -109,18 +113,22 @@ namespace GmailTest
             else return false;
         }
 
-        public bool IsVissibleLoadingInfo()
-        {
-            return WaitShowElementEx(browser, LoadingInfo, 15);
-        }
-
         /// <summary>
-        /// Возвращает текст элемента "Забыли пароль?".
+        /// Определяет наличие информации о загрузке входящих.
         /// </summary>
         /// <returns></returns>
-        public string GetForgotPasswordText()
+        public bool IsExistLoadingInfo()
         {
-            return WaitShowElement(browser, ForgotPassText, 15).Text;
+            return WaitElementExist(browser, LoadingInfo, 15);
+        }        
+
+        /// <summary>
+        /// Возвращает сообщение об ошибочных логине и пароле.
+        /// </summary>
+        /// <returns></returns>
+        public string GetErrorLoginPassMessage()
+        {
+            return WaitShowElement(browser, ErrorLoginPassMassage, 5).Text;
         }
     }
 
