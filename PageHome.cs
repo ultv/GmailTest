@@ -41,6 +41,8 @@ namespace GmailTest
         /// </summary>
         private By ForgotPassText { get { return By.CssSelector("#forgotPassword > content > span"); } }
 
+        private By LoadingInfo { get { return By.Id("loading"); } }
+
         /// <summary>
         /// Кнопка "Перезагрузить"
         /// </summary>
@@ -105,6 +107,11 @@ namespace GmailTest
             if (elements.Count > 0)
                 return true;
             else return false;
+        }
+
+        public bool IsVissibleLoadingInfo()
+        {
+            return WaitShowElementEx(browser, LoadingInfo, 15);
         }
 
         /// <summary>

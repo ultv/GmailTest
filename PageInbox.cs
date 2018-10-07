@@ -111,6 +111,13 @@ namespace GmailTest
         [FindsBy(How = How.ClassName, Using = "Ha")]
         private IWebElement CloseIcon;
 
+        private By OkMessage { get { return By.ClassName("bAq"); } }
+
+        [FindsBy(How = How.ClassName, Using = "gb_9a")]
+        private IWebElement AccountButton;
+        
+        private By ExitLink {  get { return By.LinkText("Выйти"); } }        
+
         /// <summary>
         /// Осуществляет поиск среди входящих писем.
         /// </summary>
@@ -153,19 +160,18 @@ namespace GmailTest
             
             if(capabilities == "firefox")            
                 ScriptKeys(mailTo, subject, message + CountMail);
-            else
-            {            
-                sendTo.SendKeys(mailTo);
-                SubjectInput.SendKeys(subject);
-                MessageArea.SendKeys(message + CountMail);            
-            }
+            //else
+            //{            
+            //    sendTo.SendKeys(mailTo);
+            //    SubjectInput.SendKeys(subject);
+//                MessageArea.SendKeys(message + CountMail);
+                MessageArea.SendKeys(Keys.Control + Keys.Enter);            
+           //}
+           
 
-            MessageArea.SendKeys(Keys.Control + Keys.Enter);
-
-            if (WaitHideElement(browser, ToInputBy, 15))
+            if (WaitShowElementEx(browser, OkMessage, 10))
             {
-                if (!WaitShowElementEx(browser, ErrorMessage, 3))
-                    return true;
+                return true;
             }
 
             return false;                        
@@ -193,7 +199,17 @@ namespace GmailTest
             IJavaScriptExecutor js = (IJavaScriptExecutor)browser;
             js.ExecuteScript("document.getElementsByName('to')[0].textContent = '" + mail + "'");
             js.ExecuteScript("document.getElementsByName('subjectbox')[0].value = '" + sub + "'");
-            js.ExecuteScript("document.getElementById(':fz').value = '" + mess + "'");
+
+            js.ExecuteScript("document.getElementById(':fz').textContent = '" + mess + "'");
+        }
+
+        /// <summary>
+        /// Выход из аккаунта.
+        /// </summary>
+        public void LogOut()
+        {
+            AccountButton.Click();
+            WaitShowElement(browser, ExitLink, 5).Click();
         }
 
         
